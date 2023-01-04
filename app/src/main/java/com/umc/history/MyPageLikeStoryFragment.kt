@@ -1,8 +1,6 @@
 package com.umc.history
 
-import android.graphics.Insets.add
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.databinding.FragmentMypageLikestoryBinding
+import com.umc.history.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

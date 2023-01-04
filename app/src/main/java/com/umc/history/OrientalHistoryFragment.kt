@@ -1,15 +1,14 @@
 package com.umc.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.umc.history.databinding.FragmentAllBinding
 import com.umc.history.databinding.FragmentOrientalhistoryBinding
+import com.umc.history.ui.MainActivity
 
 class OrientalHistoryFragment : Fragment(), StoryView, OneStoryView {
     lateinit var binding: FragmentOrientalhistoryBinding

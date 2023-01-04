@@ -17,17 +17,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiStory"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".SignUpActivity" />
         <activity android:name=".LockSettingActivity" />
         <activity android:name=".ProfileEditorActivity" />
         <activity android:name=".SettingLogoutActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".QuestionActivity" />
         <activity android:name=".QuestionAnswerActivity" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="oauth"
+                    android:scheme="kakao072dc56b8e4fc5dc680c3e6bd92d52b9"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".login.LoginActivity"/>
         <activity
             android:name=".LockActivity"
             android:excludeFromRecents="true"
@@ -37,7 +48,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

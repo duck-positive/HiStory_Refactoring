@@ -2,19 +2,13 @@ package com.umc.history
 
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.kakao.sdk.common.KakaoSdk
+import com.umc.history.ui.MainActivity
 
 class SplashActivity:AppCompatActivity(), AuthView {
 
@@ -23,6 +17,7 @@ class SplashActivity:AppCompatActivity(), AuthView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        KakaoSdk.init(this, BuildConfig.app_key)
 
         Handler().postDelayed({
             startActivity(Intent(this, MainActivity::class.java))

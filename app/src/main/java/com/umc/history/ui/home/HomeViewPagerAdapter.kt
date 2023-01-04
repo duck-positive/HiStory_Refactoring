@@ -6,7 +6,7 @@ import com.umc.history.AllFragment
 import com.umc.history.OrientalHistoryFragment
 import com.umc.history.WesternHistoryFragment
 
-class HomeViewPagerAdapter (fragment:Fragment):FragmentStateAdapter(fragment){
+class HomeViewPagerAdapter (fragment:Fragment) : FragmentStateAdapter(fragment){
 
     override fun getItemCount(): Int = 4
 

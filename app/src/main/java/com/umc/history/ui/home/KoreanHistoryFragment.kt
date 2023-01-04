@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.umc.history.*
 import com.umc.history.databinding.FragmentKoreanhistoryBinding
+import com.umc.history.ui.MainActivity
 
 class KoreanHistoryFragment: Fragment(), StoryView, OneStoryView {
     lateinit var binding: FragmentKoreanhistoryBinding

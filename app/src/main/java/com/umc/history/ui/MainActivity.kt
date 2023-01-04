@@ -1,32 +1,36 @@
 package com.umc.history.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-
-import com.umc.history.databinding.ActivityMainBinding
+import androidx.lifecycle.Observer
 import com.umc.history.*
+import com.umc.history.databinding.ActivityMainBinding
+import com.umc.history.login.LoginViewModel
 import com.umc.history.ui.home.HomeFragment
-import okhttp3.internal.Internal.instance
 
 class MainActivity : AppCompatActivity() {
     private var mBinding : ActivityMainBinding? = null
     private val binding get() = mBinding!!
-
+    private val loginViewModel : LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var token : String? = null
+        val loginObserver = Observer<String> { loginToken ->
+            token = loginToken
+        }
+        loginViewModel.currentAccessToken.observe( this, loginObserver)
 
+        binding.bnvMain.selectedItemId = R.id.nav_home
         supportFragmentManager
             .beginTransaction()
             .replace(binding.flContainer.id, HomeFragment())
             .commitAllowingStateLoss()
-
         binding.bnvMain.setOnItemSelectedListener {
             changeFragment(it.itemId)
             true

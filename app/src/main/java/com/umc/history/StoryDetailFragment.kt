@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.umc.history.databinding.FragmentStoryDetailBinding
+import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
 
 

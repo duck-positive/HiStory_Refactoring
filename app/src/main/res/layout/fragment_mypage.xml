@@ -16,24 +16,17 @@
         android:textColor="@color/black"
         android:textSize="21dp"
         />
-    <LinearLayout
-        android:id="@+id/myPage_setting_ly"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="44dp"
-        >
-    <ImageView
-        android:id="@+id/myPage_setting_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="5dp"
-        android:layout_marginTop="20dp"
+    <ImageButton
+        android:id="@+id/myPage_setting_ib"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@color/white"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_mypage_setting"
-
-        />
-</LinearLayout>
+        android:layout_marginEnd="25dp"
+        app:layout_constraintTop_toTopOf="@id/myPage_myPage_tv"
+        app:layout_constraintBottom_toBottomOf="@id/myPage_myPage_tv"
+        app:layout_constraintEnd_toEndOf="parent"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/myPage_profile_img_iv"
         android:layout_width="70dp"
@@ -42,17 +35,38 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="29dp"
         android:layout_marginTop="41dp"
-        android:src="@drawable/history_logo"
-        />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/myPage_profile_ly"
+        android:src="@drawable/history_logo" />
+    <TextView
+        android:id="@+id/myPage_login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/myPage_profile_img_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="123dp"
-        android:layout_marginStart="40dp"
-        />
+        android:text="로그인 하시고\n더 많은 이야기를 보고 가세요!"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/myPage_profile_img_iv"
+        app:layout_constraintStart_toEndOf="@id/myPage_myPage_tv"/>
+    <TextView
+        android:id="@+id/myPage_nickName_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="닉네임"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/myPage_login_tv"
+        app:layout_constraintStart_toStartOf="@id/myPage_login_tv"/>
+    <ImageButton
+        android:id="@+id/myPage_login_ib"
+        android:layout_width="70dp"
+        android:layout_height="24dp"
+        android:background="@color/white"
+        android:src="@drawable/login_img"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/myPage_login_tv"
+        app:layout_constraintStart_toStartOf="@id/myPage_login_tv"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/myPage_menu_tb"
         android:layout_width="match_parent"

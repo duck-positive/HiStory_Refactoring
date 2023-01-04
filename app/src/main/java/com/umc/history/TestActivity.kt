@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.umc.history.databinding.ActivityTestBinding
+import com.umc.history.ui.MainActivity
 
 
 class TestActivity : AppCompatActivity(), TestView {

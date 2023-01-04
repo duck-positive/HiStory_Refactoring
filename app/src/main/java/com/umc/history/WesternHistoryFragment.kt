@@ -1,7 +1,6 @@
 package com.umc.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.databinding.FragmentWesternhistoryBinding
+import com.umc.history.ui.MainActivity
 
 class WesternHistoryFragment: Fragment(), StoryView, OneStoryView {
     lateinit var binding: FragmentWesternhistoryBinding
