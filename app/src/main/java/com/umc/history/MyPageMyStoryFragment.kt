@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.databinding.FragmentMypageLikestoryBinding
 import com.umc.history.ui.MainActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 
 class MyPageMyStoryFragment: Fragment(), OneStoryView {
     lateinit var binding: FragmentMypageLikestoryBinding
@@ -38,41 +36,6 @@ class MyPageMyStoryFragment: Fragment(), OneStoryView {
 
             val retrofit = Retrofit.Builder().baseUrl("http://history-balancer-5405023.ap-northeast-2.elb.amazonaws.com").addConverterFactory(
                 GsonConverterFactory.create()).build()
-            val userWroteStoryService = retrofit.create(UserWroteStoryInterface::class.java)
-
-
-
-            userWroteStoryService.getUserWroteStory("Bearer $token").enqueue(object : Callback<SearchResponse>{
-                override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
-                    val resp = response.body()
-                    if(resp?.body != null){
-                        myPageStoryDatas.clear()
-                        for(body in resp.body) {
-                            myPageStoryDatas.add(body)
-                        }
-                        val myPageStoryRVAdapter = MyPageStoryRVAdapter(myPageStoryDatas)
-                        //리사이클러뷰에 어댑터를 연결
-                        binding.myPageStoryRecyclerView.adapter = myPageStoryRVAdapter
-                        myPageStoryRVAdapter.storyItemClickListener(object : MyPageStoryRVAdapter.StoryItemClickListener {
-                            override fun onItemClick(story: Body) {
-                                getOneStory(story)
-                            }
-                        })
-                        binding.myPageStoryRecyclerView.visibility = View.VISIBLE
-//                        myPageStoryDatas.apply {
-//                            add(MyPageStory(response.body()?.body?.title,response.body()?.body?.user?.profileImageUrl,response.body()?.body?.totalLike,response.body()?.body?.totalComment,response.body()?.body?.contents,response.body()?.body?.user?.nickName))
-//                        }
-                    }
-
-
-
-                }
-
-                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-
-                }
-            })
-
 
 
 
@@ -98,11 +61,7 @@ class MyPageMyStoryFragment: Fragment(), OneStoryView {
 
         return binding.root
     }
-    private fun getOneStory(story:Body){
-        val storyService = StoryService()
-        storyService.setOneStoryView(this)
-        storyService.getStory(story.postIdx)
-    }
+
 
     override fun onStoryFailure() {
 

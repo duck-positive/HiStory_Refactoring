@@ -60,11 +60,12 @@
                     android:visibility="gone"/>
 
             </LinearLayout>
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/home_banner_vp"
+                <ImageView
+                    android:id="@+id/home_banner_iv"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="205dp"
+                    android:src="@drawable/home_banner_img"
                     app:layout_constraintTop_toBottomOf="@+id/home_title_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

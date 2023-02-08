@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
-import com.umc.history.BannerViewPagerAdapter
+import com.umc.history.R
 import com.umc.history.databinding.FragmentHomeBinding
 import com.umc.history.login.LoginActivity
 import com.umc.history.login.LoginViewModel
@@ -34,15 +33,18 @@ class HomeFragment: Fragment(){
 
         val homeAdapter = HomeViewPagerAdapter(this)
         binding.homeMenuVp.adapter = homeAdapter
-        TabLayoutMediator(binding.homeMenuTb,binding.homeMenuVp){
-            tab,position->
+        TabLayoutMediator(binding.homeMenuTb,binding.homeMenuVp){ tab,position->
             tab.text = information[position]
+            tab.view.setOnClickListener {
+                binding.homeBannerIv.setImageResource(
+                    when(position){
+                        0 -> R.drawable.home_banner_img
+                        1 -> R.drawable.korean_banner
+                        2 -> R.drawable.oriental_banner
+                        else -> R.drawable.western_banner
+                })
+            }
         }.attach()
-
-
-        val bannerAdapter = BannerViewPagerAdapter(this)
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         binding.homeLoginIv.setOnClickListener {
             login()
@@ -66,20 +68,25 @@ class HomeFragment: Fragment(){
                 Log.d("logout", "로그아웃 성공")
                 binding.homeLoginTv.visibility = View.GONE
                 binding.homeLoginIv.visibility = View.VISIBLE
-                loginViewModel.currentAccessToken.value = null
             }
-
         }
     }
 
     private fun checkLogin(){
         if(AuthApiClient.instance.hasToken()){
-            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                Log.d("home_login", tokenInfo.toString())
-            }
+            UserApiClient.instance.me { user, error ->
+                if(error != null){
 
-            binding.homeLoginTv.visibility = View.VISIBLE
-            binding.homeLoginIv.visibility = View.GONE
+                } else if (user != null) {
+                    binding.homeLoginTv.visibility = View.VISIBLE
+                    binding.homeLoginIv.visibility = View.GONE
+                }
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }

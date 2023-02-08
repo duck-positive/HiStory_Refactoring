@@ -2,6 +2,7 @@ package com.umc.history
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.umc.history.ui.home.all.AllFragment
 
 class HomeViewPagerAdapter (fragment:Fragment):FragmentStateAdapter(fragment){
 
@@ -9,10 +10,10 @@ class HomeViewPagerAdapter (fragment:Fragment):FragmentStateAdapter(fragment){
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0-> AllFragment()
-            1->KoreanHistoryFragment()
-            2->OrientalHistoryFragment()
-            else->WesternHistoryFragment()
+            0-> AllFragment(0)
+            1->AllFragment(1)
+            2->AllFragment(2)
+            else->AllFragment(3)
         }
     }
 }

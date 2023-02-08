@@ -1,13 +1,11 @@
-package com.umc.history
+package com.umc.history.ui.search
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.umc.history.databinding.ItemMypageStoryBinding
-import com.umc.history.databinding.ItemStoryBinding
+import retrofit2.http.Body
 
 class SearchStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : RecyclerView.Adapter<SearchStoryRVAdapter.ViewHolder>(){
 
@@ -41,16 +39,8 @@ class SearchStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
 
 
     inner class ViewHolder(val binding: ItemMypageStoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(searchStory:Body){
-            binding.itemMyPageStoryTitleTv.text=searchStory.title
-            binding.itemMyPageStoryDetailTv.text=searchStory.contents
-            binding.itemMyPageStoryNickNameTv.text=if(searchStory.user == null){
-                "duck"
-            } else {
-                searchStory.user.nickName
-            }
-            binding.itemMyPageStoryLikeTv.text= searchStory.totalLike.toString()
-            binding.itemMyPageStoryCommentTv.text=searchStory.totalComment.toString()
+        fun bind(searchStory: Body){
+
 //            Glide.with(context)
 //                .load(if(searchStory.user!!.profileImgUrl == null){
 //                    "https://history-app-story-image.s3.ap-northeast-2.amazonaws.com/static/35dd9731-2e90-41ba-a47b-79c36e9c3435history_logo.png"

@@ -9,13 +9,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.umc.history.*
 import com.umc.history.databinding.FragmentKoreanhistoryBinding
 import com.umc.history.ui.MainActivity
+import com.umc.history.ui.viewmodel.KoreanHistoryViewModel
 
 class KoreanHistoryFragment: Fragment(), StoryView, OneStoryView {
     lateinit var binding: FragmentKoreanhistoryBinding
     private var storyDatas = ArrayList<OneStory>()
+
+    private val viewModel : KoreanHistoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +37,17 @@ class KoreanHistoryFragment: Fragment(), StoryView, OneStoryView {
         window?.setGravity(Gravity.BOTTOM)
         builder.setView(dialogView)
 
+        viewModel.storyList.add(
+            (OneStory(1, "2", "2", 1, null, "korean", "da", "da", 11, 1, 3, null, null))
+        )
+        val storyRVAdapter = StoryRVAdapter(viewModel.storyList)
+        storyRVAdapter.myItemClickListener(object : StoryRVAdapter.MyItemClickListener {
+            override fun onItemClick(story: OneStory) {
+                getOneStory(story.postIdx)
+            }
+        })
+
+        binding.homeStoryRecyclerView.adapter = storyRVAdapter
         binding.koreanStoryAlignIv.setOnClickListener {
             alertDialog.show()
             alertDialog.findViewById<TextView>(R.id.dialog_like_tv).setOnClickListener {
@@ -71,14 +86,6 @@ class KoreanHistoryFragment: Fragment(), StoryView, OneStoryView {
         for (story in body){
             storyDatas.add(story)
         }
-        val storyRVAdapter = StoryRVAdapter(storyDatas)
-        storyRVAdapter.myItemClickListener(object : StoryRVAdapter.MyItemClickListener {
-            override fun onItemClick(story: OneStory) {
-                getOneStory(story.postIdx)
-            }
-        })
-        binding.homeStoryRecyclerView.adapter = storyRVAdapter
-
     }
 
     private fun initView(flag : Int){

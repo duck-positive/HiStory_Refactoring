@@ -53,9 +53,7 @@ class MyPageLikeStoryFragment: Fragment(), OneStoryView {
                     myPageStoryLikeRVAdapter.likeItemClickListener(object :
                         MyPageStoryLikeRVAdapter.LikeItemClickListener {
                         override fun onItemClick(story: LikedResponse) {
-                            getOneStory(Body(story.post!!.postIdx, story.post.totalLike, story.post.totalClick,
-                                story.post.totalComment, story.post.createdDate, story.post.lastModifedDate, story.post.category,
-                                story.post.title, User2(story.user.profileImageUrl, story.user.userId, story.user.nickName), story.post.contents))
+
                         }
                     })
                     binding.myPageStoryRecyclerView.visibility = View.VISIBLE
@@ -93,11 +91,7 @@ class MyPageLikeStoryFragment: Fragment(), OneStoryView {
 
         return binding.root
     }
-    private fun getOneStory(story:Body){
-        val storyService = StoryService()
-        storyService.setOneStoryView(this)
-        storyService.getStory(story.postIdx)
-    }
+
 
     override fun onStoryFailure() {
 

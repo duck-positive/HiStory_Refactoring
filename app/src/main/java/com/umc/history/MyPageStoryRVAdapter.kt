@@ -1,13 +1,12 @@
 package com.umc.history
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.umc.history.databinding.ItemMypageStoryBinding
-import com.umc.history.databinding.ItemStoryBinding
+
+import retrofit2.http.Body
 
 class MyPageStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : RecyclerView.Adapter<MyPageStoryRVAdapter.ViewHolder>(){
 
@@ -44,12 +43,8 @@ class MyPageStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
     //뷰홀더
 
     inner class ViewHolder(val binding: ItemMypageStoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(myPageStory:Body){
-            binding.itemMyPageStoryTitleTv.text=myPageStory.title
-            binding.itemMyPageStoryDetailTv.text=myPageStory.contents
-            binding.itemMyPageStoryNickNameTv.text=myPageStory.user!!.nickName
-            binding.itemMyPageStoryLikeTv.text= myPageStory.totalLike.toString()
-            binding.itemMyPageStoryCommentTv.text=myPageStory.totalComment.toString()
+        fun bind(myPageStory: Body){
+
 //            Glide.with(context)
 //                .load(myPageStory.user.profileImgUrl)
 //                .into(binding.itemMyPageStoryProfileImgIv)
