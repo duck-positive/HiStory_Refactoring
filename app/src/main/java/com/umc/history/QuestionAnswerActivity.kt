@@ -2,7 +2,6 @@ package com.umc.history
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.umc.history.databinding.ActivityQuestionAnswerBinding
 
@@ -27,6 +26,9 @@ class QuestionAnswerActivity : AppCompatActivity() {
         when(answer){
             false -> {
                 binding.questionAnswerTv.text = "낙방하였습니다..\n한번 더 읽어보고 올까요?"
+            }
+            else -> {
+
             }
         }
         binding.questionSolutionTv.bringToFront()

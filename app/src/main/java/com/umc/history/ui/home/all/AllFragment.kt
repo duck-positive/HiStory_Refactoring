@@ -8,14 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.umc.history.HiStoryApplication
 import com.umc.history.OneStory
 import com.umc.history.R
 import com.umc.history.databinding.FragmentAllBinding
+import com.umc.history.ui.home.StoryListAdapter
+import com.umc.history.ui.viewmodel.StoryViewModel
+import com.umc.history.ui.viewmodel.StoryViewModelFactory
 
 class AllFragment(private val type : Int): Fragment() {
     lateinit var binding: FragmentAllBinding
     private var storyDatas = ArrayList<OneStory>()
-
+    private val storyViewModel : StoryViewModel by viewModels {
+        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,7 +32,15 @@ class AllFragment(private val type : Int): Fragment() {
     ): View? {
         binding = FragmentAllBinding.inflate(inflater,container,false)
        // checkType(type)
-
+        val storyRecyclerView = binding.homeStoryRecyclerView
+        val adapter = StoryListAdapter()
+        storyRecyclerView.adapter = adapter
+        storyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        storyViewModel.allStory.observe(viewLifecycleOwner, Observer{ story ->
+            story.let {
+                 adapter.notifyDataSetChanged()
+            }
+        })
         val builder = AlertDialog.Builder(activity)
         val dialogView = layoutInflater.inflate(R.layout.dialog_align, null)
         builder.setView(dialogView)
@@ -32,6 +49,7 @@ class AllFragment(private val type : Int): Fragment() {
         window?.setGravity(Gravity.BOTTOM)
         builder.setView(dialogView)
 
+        //binding.homeStoryRecyclerView.
         binding.homeStoryAlignIv.setOnClickListener {
             alertDialog.show()
             alertDialog.findViewById<TextView>(R.id.dialog_like_tv).setOnClickListener {

@@ -14,13 +14,13 @@ import com.kakao.sdk.user.UserApiClient
 import com.umc.history.R
 import com.umc.history.databinding.FragmentHomeBinding
 import com.umc.history.login.LoginActivity
-import com.umc.history.login.LoginViewModel
+import com.umc.history.ui.viewmodel.HomeViewModel
 
 
 class HomeFragment: Fragment(){
     lateinit var binding: FragmentHomeBinding
     private var token : String? = null
-    private val loginViewModel : LoginViewModel by viewModels()
+    private val homeViewModel : HomeViewModel by viewModels()
     val information = arrayListOf("전체","한국사","동양사","서양사")
 
     override fun onCreateView(
@@ -36,13 +36,14 @@ class HomeFragment: Fragment(){
         TabLayoutMediator(binding.homeMenuTb,binding.homeMenuVp){ tab,position->
             tab.text = information[position]
             tab.view.setOnClickListener {
-                binding.homeBannerIv.setImageResource(
-                    when(position){
-                        0 -> R.drawable.home_banner_img
-                        1 -> R.drawable.korean_banner
-                        2 -> R.drawable.oriental_banner
-                        else -> R.drawable.western_banner
-                })
+                    binding.homeBannerIv.setImageResource(
+                        when (position) {
+                            0 -> R.drawable.home_banner_img
+                            1 -> R.drawable.korean_banner
+                            2 -> R.drawable.oriental_banner
+                            else -> R.drawable.western_banner
+                        }
+                    )
             }
         }.attach()
 

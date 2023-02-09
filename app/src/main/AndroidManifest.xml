@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".HiStoryApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/history_logo"
@@ -21,7 +22,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".LockSettingActivity" />
+        
         <activity android:name=".ProfileEditorActivity" />
         <activity android:name=".SettingLogoutActivity" />
         <activity android:name=".TestActivity" />

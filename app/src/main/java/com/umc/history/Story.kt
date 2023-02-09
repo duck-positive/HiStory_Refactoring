@@ -1,12 +1,20 @@
 package com.umc.history
 
-import android.net.Uri
-import retrofit2.http.Url
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "story_table")
 data class Story(
-    var title: String? = "",
-    var coverImg: String,
-    var likeNumber: Int?=null,
-    var commentNumber: Int?=null,
-    var detail: ArrayList<String>?=null
+    @PrimaryKey(autoGenerate = true) val id : Int,
+    @ColumnInfo(name = "title")
+    var title: String = "",
+    @ColumnInfo(name = "coverImg")
+    val coverImg: String = "",
+    @ColumnInfo(name = "likeNumber")
+    var likeNumber: Int = 0,
+    @ColumnInfo(name = "commentNumber")
+    var commentNumber: Int = 0,
+    @ColumnInfo(name = "detail")
+    var detail: String? =null
 )
