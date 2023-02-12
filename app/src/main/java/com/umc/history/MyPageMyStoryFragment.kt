@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.databinding.FragmentMypageLikestoryBinding
-import com.umc.history.ui.MainActivity
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -71,8 +70,8 @@ class MyPageMyStoryFragment: Fragment(), OneStoryView {
     }
 
     override fun onStorySuccess(status: String, body: OneStory?) {
-        (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_container, StoryDetailFragment(body!!)).commitAllowingStateLoss()
+//        (context as MainActivity).supportFragmentManager.beginTransaction()
+//            .replace(R.id.fl_container, StoryDetailFragment(body!!)).commitAllowingStateLoss()
     }
 
 }

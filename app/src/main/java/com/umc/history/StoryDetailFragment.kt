@@ -14,13 +14,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.umc.history.databinding.FragmentStoryDetailBinding
 import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
 
 
-class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteView, PostCommentView, LikeView{
+class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, PostCommentView, LikeView{
     lateinit var binding : FragmentStoryDetailBinding
     private var hashtagList = arrayListOf<String>()
     private var commentList = arrayListOf<Comment>()
@@ -62,25 +61,19 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
         window?.setGravity(Gravity.BOTTOM)
         builder.setView(dialogView)
 
-        val profile = story.user
-        binding.storyWriterNicknameTv.text = profile?.nickName
-        Glide.with(requireContext()).load(if(profile?.profileImageUrl.isNullOrEmpty()){
-            "https://history-app-story-image.s3.ap-northeast-2.amazonaws.com/static/419316de-3fac-4955-80ae-2ec2b3193191history_logo.png"
-        } else {
-            profile!!.profileImageUrl
-        }).into(binding.storyWriterProfileIv)
+
         binding.storyTitleTv.text = story.title
 
-        if(story.images.isNullOrEmpty()) {
-            binding.storyImageSv.visibility = View.GONE
-            binding.storyImageIv.visibility = View.GONE
-        } else {
-            getImage(story.images!!.size)
-        }
+//        if(story.images.isNullOrEmpty()) {
+//            binding.storyImageSv.visibility = View.GONE
+//            binding.storyImageIv.visibility = View.GONE
+//        } else {
+//            getImage(story.images!!.size)
+//        }
 
-        binding.storyContentTv.text = story.contents
-        binding.storyLikeTv.text = story.totalLike.toString()
-        binding.storyCommentTv.text = story.totalComment.toString()
+//        binding.storyContentTv.text = story.contents
+//        binding.storyLikeTv.text = story.totalLike.toString()
+//        binding.storyCommentTv.text = story.totalComment.toString()
 
 
         binding.storyLikeIv.setOnClickListener {
@@ -115,11 +108,11 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
         storyService.setDeleteView(this)
         val spf = activity?.getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
         val token = spf?.getString("accessToken",null)
-        if(token == null){
-            Toast.makeText(activity,"로그인이 되어있지 않습니다.",Toast.LENGTH_SHORT).show()
-        }else{
-            storyService.deleteStory(token,story.postIdx)
-        }
+//        if(token == null){
+//            Toast.makeText(activity,"로그인이 되어있지 않습니다.",Toast.LENGTH_SHORT).show()
+//        }else{
+//            storyService.deleteStory(token,story.postIdx)
+//        }
 
     }
     private fun report(){
@@ -135,7 +128,7 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
     private fun getComment(){
         val commentService = CommentService()
         commentService.setCommentView(this)
-        commentService.getComments(story.postIdx)
+//        commentService.getComments(story.postIdx)
     }
     private fun postComment(){
         val userSpf = activity?.getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
@@ -145,18 +138,18 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
         } else{
             val commentService = CommentService()
             commentService.postCommentView(this)
-            commentService.postComment(token,story.postIdx, binding.storyCommentEt.text.toString())
+            //commentService.postComment(token,story.postIdx, binding.storyCommentEt.text.toString())
         }
     }
     private fun getHashTag(){
-        if(story.hashTags!!.isNotEmpty()){
-            val list = story.hashTags
-            for(hashTag in list!!){
-                hashtagList.add(hashTag.tag)
-            }
-            binding.storyHashtagRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.storyHashtagRv.adapter = StoryHashtagRVAdapter(hashtagList)
-        }
+//        if(story.hashTags!!.isNotEmpty()){
+//            val list = story.hashTags
+//            for(hashTag in list!!){
+//                hashtagList.add(hashTag.tag)
+//            }
+//            binding.storyHashtagRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            binding.storyHashtagRv.adapter = StoryHashtagRVAdapter(hashtagList)
+//        }
     }
     private fun postLike(){
         val userSpf = requireContext().getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
@@ -165,7 +158,7 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
             Toast.makeText(requireContext(),"로그인이 되어 있지 않습니다", Toast.LENGTH_SHORT).show()
         } else {
             val likeService = LikeService()
-            likeService.postLike(token, story.postIdx)
+//            likeService.postLike(token, story.postIdx)
             if(binding.storyLikeOnIv.visibility == View.VISIBLE){
                 binding.storyLikeOnIv.visibility = View.GONE
                 binding.storyLikeIv.visibility = View.VISIBLE
@@ -181,7 +174,7 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
         if(token != null){
             val likeService = LikeService()
             likeService.setLikeView(this)
-            likeService.checkLike(token, story.postIdx)
+//            likeService.checkLike(token, story.postIdx)
         }
     }
 
@@ -257,31 +250,5 @@ class StoryDetailFragment(story : OneStory) : Fragment(), CommentView, DeleteVie
             }
         }
         postLike()
-    }
-
-    private fun getImage(count : Int){
-        when(count){
-            1 -> Glide.with(requireContext()).load(story.images!![0].imageUrl).into(binding.storyImageIv)
-            2 -> {
-                getImage(1)
-                binding.storyImage2Iv.visibility = View.VISIBLE
-                Glide.with(requireContext()).load(story.images!![1].imageUrl).into(binding.storyImage2Iv)
-            }
-            3 -> {
-                getImage(2)
-                binding.storyImage3Iv.visibility = View.VISIBLE
-                Glide.with(requireContext()).load(story.images!![2].imageUrl).into(binding.storyImage3Iv)
-            }
-            4 -> {
-                getImage(3)
-                binding.storyImage4Iv.visibility = View.VISIBLE
-                Glide.with(requireContext()).load(story.images!![3].imageUrl).into(binding.storyImage4Iv)
-            }
-            5 -> {
-                getImage(4)
-                binding.storyImage5Iv.visibility = View.VISIBLE
-                Glide.with(requireContext()).load(story.images!![4].imageUrl).into(binding.storyImage5Iv)
-            }
-        }
     }
 }

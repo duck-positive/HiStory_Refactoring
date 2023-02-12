@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.OneStory
 import com.umc.history.OneStoryView
 import com.umc.history.R
-import com.umc.history.StoryDetailFragment
 import com.umc.history.databinding.FragmentSearchBinding
-import com.umc.history.ui.MainActivity
 import retrofit2.http.Body
 
 class SearchFragment : Fragment(), OneStoryView {
@@ -85,8 +83,8 @@ class SearchFragment : Fragment(), OneStoryView {
     }
 
     override fun onStorySuccess(status: String, body: OneStory?) {
-        (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_container, StoryDetailFragment(body!!)).commitAllowingStateLoss()
+//        (context as MainActivity).supportFragmentManager.beginTransaction()
+//            .replace(R.id.fl_container, StoryDetailFragment(body!!)).commitAllowingStateLoss()
     }
 
 }

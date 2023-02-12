@@ -12,6 +12,9 @@ interface StoryDao {
     @Query("SELECT * FROM story_table")
     fun getAllStory() : Flow<List<Story>>
 
+    @Query("SELECT * FROM story_table WHERE category = :category")
+    fun getStoryByCategory(category: String) : Flow<List<Story>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(story: Story)
 }

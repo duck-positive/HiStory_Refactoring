@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "story_table")
 data class Story(
     @PrimaryKey(autoGenerate = true) val id : Int,
+    @ColumnInfo(name = "category")
+    var category: String,
     @ColumnInfo(name = "title")
     var title: String = "",
     @ColumnInfo(name = "coverImg")

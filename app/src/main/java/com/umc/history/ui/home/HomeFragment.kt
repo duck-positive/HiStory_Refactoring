@@ -85,9 +85,4 @@ class HomeFragment: Fragment(){
             }
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
 }

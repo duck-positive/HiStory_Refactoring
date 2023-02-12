@@ -1,6 +1,7 @@
 package com.umc.history.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,7 +10,7 @@ import com.umc.history.Story
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Story::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Story::class), version = 2, exportSchema = true)
 public abstract class StoryRoomDatabase : RoomDatabase(){
     abstract fun storyDao() : StoryDao
 
@@ -21,8 +22,10 @@ public abstract class StoryRoomDatabase : RoomDatabase(){
             INSTANCE?.let { database ->
                 scope.launch {
                     var storyDao = database.storyDao()
+                    Log.d("insert", "insert")
                     storyDao.insert(
-                        Story(1)
+
+                        Story(1, "daddd")
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package com.umc.history.ui.home.all
+package com.umc.history.ui.home
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,16 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.HiStoryApplication
-import com.umc.history.OneStory
 import com.umc.history.R
+import com.umc.history.Story
+import com.umc.history.StoryDetailFragment
 import com.umc.history.databinding.FragmentAllBinding
-import com.umc.history.ui.home.StoryListAdapter
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
 
 class AllFragment(private val type : Int): Fragment() {
     lateinit var binding: FragmentAllBinding
-    private var storyDatas = ArrayList<OneStory>()
     private val storyViewModel : StoryViewModel by viewModels {
         StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
     }
@@ -31,16 +30,8 @@ class AllFragment(private val type : Int): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAllBinding.inflate(inflater,container,false)
-       // checkType(type)
-        val storyRecyclerView = binding.homeStoryRecyclerView
-        val adapter = StoryListAdapter()
-        storyRecyclerView.adapter = adapter
-        storyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        storyViewModel.allStory.observe(viewLifecycleOwner, Observer{ story ->
-            story.let {
-                 adapter.notifyDataSetChanged()
-            }
-        })
+        checkType(type)
+
         val builder = AlertDialog.Builder(activity)
         val dialogView = layoutInflater.inflate(R.layout.dialog_align, null)
         builder.setView(dialogView)
@@ -49,8 +40,8 @@ class AllFragment(private val type : Int): Fragment() {
         window?.setGravity(Gravity.BOTTOM)
         builder.setView(dialogView)
 
-        //binding.homeStoryRecyclerView.
         binding.homeStoryAlignIv.setOnClickListener {
+            storyViewModel.insertStory(Story(2, "dasdasd"))
             alertDialog.show()
             alertDialog.findViewById<TextView>(R.id.dialog_like_tv).setOnClickListener {
                 alertDialog.hide()
@@ -59,26 +50,48 @@ class AllFragment(private val type : Int): Fragment() {
                 alertDialog.hide()
             }
         }
+
        return binding.root
     }
 
-//    private fun checkType(type : Int){
-//        when(type) {
-//            0 -> {
-//                TODO("전체 불러오기")
-//            }
-//
-//            1 -> {
-//                TODO("한국사 불러오기")
-//            }
-//            2-> {
-//                TODO("동양사 불러오기")
-//            }
-//            else -> {
-//                TODO("서양사 불러오기")
-//            }
-//        }
-//    }
+    private fun checkType(type : Int){
+        val storyRecyclerView = binding.homeStoryRecyclerView
+        val adapter = StoryListAdapter()
+        adapter.setItemClickListener(object : StoryListAdapter.ItemClickListener {
+            override fun onItemClick(story: Story) {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_container, StoryDetailFragment(story)).commit()
+            }
+        })
+        storyRecyclerView.adapter = adapter
+        storyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        when(type) {
+            0 -> {
+                storyViewModel.allStory.observe(viewLifecycleOwner, Observer { story ->
+                    story.let { adapter.submitList(it) }
+                })
+            }
+
+            1 -> {
+                storyViewModel.koreanStory.observe(viewLifecycleOwner, Observer { story->
+                    story.let { adapter.submitList(it) }
+                })
+            }
+
+            2-> {
+                storyViewModel.orientalStory.observe(viewLifecycleOwner, Observer { story->
+                    story.let { adapter.submitList(it) }
+                })
+            }
+
+            else -> {
+                storyViewModel.westernStory.observe(viewLifecycleOwner, Observer { story->
+                    story.let { adapter.submitList(it) }
+                })
+            }
+        }
+    }
 
 
 }
