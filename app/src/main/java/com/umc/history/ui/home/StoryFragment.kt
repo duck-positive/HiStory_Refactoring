@@ -15,21 +15,24 @@ import com.umc.history.HiStoryApplication
 import com.umc.history.R
 import com.umc.history.Story
 import com.umc.history.StoryDetailFragment
-import com.umc.history.databinding.FragmentAllBinding
+import com.umc.history.databinding.FragmentStoryBinding
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
 
-class AllFragment(private val type : Int): Fragment() {
-    lateinit var binding: FragmentAllBinding
+class StoryFragment(private val type : Int): Fragment() {
+
+    private var _binding : FragmentStoryBinding? = null
+    private val binding get() = _binding!!
     private val storyViewModel : StoryViewModel by viewModels {
         StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAllBinding.inflate(inflater,container,false)
+        _binding = FragmentStoryBinding.inflate(inflater,container,false)
         checkType(type)
 
         val builder = AlertDialog.Builder(activity)
@@ -93,5 +96,9 @@ class AllFragment(private val type : Int): Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

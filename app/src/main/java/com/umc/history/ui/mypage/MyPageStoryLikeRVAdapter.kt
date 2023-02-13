@@ -1,13 +1,11 @@
-package com.umc.history
+package com.umc.history.ui.mypage
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.umc.history.LikedResponse
 import com.umc.history.databinding.ItemMypageStoryBinding
-import com.umc.history.databinding.ItemStoryBinding
 
 class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedResponse>) : RecyclerView.Adapter<MyPageStoryLikeRVAdapter.ViewHolder>(){
 
@@ -20,7 +18,7 @@ class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedRespo
         super.onAttachedToRecyclerView(recyclerView)
         context = recyclerView.context
     }
-    fun likeItemClickListener(likeItemClickListener: LikeItemClickListener ){
+    fun likeItemClickListener(likeItemClickListener: LikeItemClickListener){
         lItemClickListener = likeItemClickListener
     }
 
@@ -44,7 +42,7 @@ class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedRespo
     //뷰홀더
 
     inner class ViewHolder(val binding: ItemMypageStoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(myPageStory:LikedResponse){
+        fun bind(myPageStory: LikedResponse){
             binding.itemMyPageStoryTitleTv.text=myPageStory.post?.title
             binding.itemMyPageStoryDetailTv.text=myPageStory.post?.contents
             binding.itemMyPageStoryNickNameTv.text=myPageStory.post?.user?.nickName

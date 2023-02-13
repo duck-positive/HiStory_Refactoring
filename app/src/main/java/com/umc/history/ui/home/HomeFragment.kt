@@ -7,20 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.umc.history.R
+import com.umc.history.auth.AuthInterface
+import com.umc.history.auth.LoginActivity
 import com.umc.history.databinding.FragmentHomeBinding
-import com.umc.history.login.LoginActivity
-import com.umc.history.ui.viewmodel.HomeViewModel
 
 
-class HomeFragment: Fragment(){
-    lateinit var binding: FragmentHomeBinding
-    private var token : String? = null
-    private val homeViewModel : HomeViewModel by viewModels()
+class HomeFragment: Fragment(), AuthInterface{
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     val information = arrayListOf("전체","한국사","동양사","서양사")
 
     override fun onCreateView(
@@ -28,7 +26,7 @@ class HomeFragment: Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater,container,false)
+        _binding = FragmentHomeBinding.inflate(inflater,container,false)
         checkLogin()
 
         val homeAdapter = HomeViewPagerAdapter(this)
@@ -56,12 +54,12 @@ class HomeFragment: Fragment(){
         return binding.root
     }
 
-    private fun login(){
+    override fun login(){
         val intent = Intent(activity, LoginActivity::class.java)
         startActivity(intent)
     }
 
-    private fun logout() {
+    override fun logout() {
         UserApiClient.instance.logout { error ->
             if(error != null){
                 Log.d("logout", "로그아웃 실패", error)
@@ -73,7 +71,7 @@ class HomeFragment: Fragment(){
         }
     }
 
-    private fun checkLogin(){
+    override fun checkLogin(){
         if(AuthApiClient.instance.hasToken()){
             UserApiClient.instance.me { user, error ->
                 if(error != null){
@@ -84,5 +82,10 @@ class HomeFragment: Fragment(){
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

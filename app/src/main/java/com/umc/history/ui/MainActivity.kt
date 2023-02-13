@@ -7,13 +7,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.umc.history.MyPageFragment
 import com.umc.history.R
 import com.umc.history.TestActivity
 import com.umc.history.WriteFragment
+import com.umc.history.auth.LoginViewModel
 import com.umc.history.databinding.ActivityMainBinding
-import com.umc.history.login.LoginViewModel
 import com.umc.history.ui.home.HomeFragment
+import com.umc.history.ui.mypage.MyPageFragment
 import com.umc.history.ui.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {

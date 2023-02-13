@@ -1,4 +1,4 @@
-package com.umc.history.login
+package com.umc.history.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,18 +10,17 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.umc.history.AuthView
-import com.umc.history.TokenBody
 import com.umc.history.databinding.ActivityLoginBinding
 import com.umc.history.ui.MainActivity
 
-class LoginActivity : AppCompatActivity(), AuthView {
-    lateinit var binding: ActivityLoginBinding
+class LoginActivity : AppCompatActivity() {
+    private var _binding: ActivityLoginBinding? = null
+    private val binding get() = _binding!!
     var token : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        _binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.loginKakaoIb.setOnClickListener {
@@ -57,20 +56,8 @@ class LoginActivity : AppCompatActivity(), AuthView {
 
     }
 
-    override fun onAuthFailure() {
-        showToast()
-    }
-
-    override fun onAuthLoading() {
-    }
-
-    override fun onAuthSuccess(tokenBody: TokenBody) {
-
-    }
-
     private fun exitLogin(){
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("token", token)
         startActivity(intent)
     }
 
@@ -81,6 +68,11 @@ class LoginActivity : AppCompatActivity(), AuthView {
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
             hideSoftInputFromWindow(editText.windowToken, 0)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

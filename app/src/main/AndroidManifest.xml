@@ -39,7 +39,7 @@
                     android:scheme="kakao072dc56b8e4fc5dc680c3e6bd92d52b9"/>
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".auth.LoginActivity"/>
         <activity
             android:name=".LockActivity"
             android:excludeFromRecents="true"

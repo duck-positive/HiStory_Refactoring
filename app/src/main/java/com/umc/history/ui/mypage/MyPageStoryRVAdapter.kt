@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.ui.mypage
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ class MyPageStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
         super.onAttachedToRecyclerView(recyclerView)
         context = recyclerView.context
     }
-    fun storyItemClickListener(storyItemClickListener: StoryItemClickListener ){
+    fun storyItemClickListener(storyItemClickListener: StoryItemClickListener){
         mItemClickListener = storyItemClickListener
     }
 

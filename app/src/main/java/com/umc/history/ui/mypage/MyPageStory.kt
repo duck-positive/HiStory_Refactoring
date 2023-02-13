@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.ui.mypage
 
 data class MyPageStory(
     var title: String? ="",

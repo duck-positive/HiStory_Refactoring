@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.ui.mypage
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -10,7 +10,7 @@ class MyPageViewPagerAdapter(fragment: MyPageFragment): FragmentStateAdapter(fra
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0-> MyPageMyStoryFragment()
-            else->MyPageLikeStoryFragment()
+            else-> MyPageLikeStoryFragment()
         }
     }
 }
