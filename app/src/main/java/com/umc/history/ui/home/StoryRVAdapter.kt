@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.umc.history.Story
+import com.umc.history.data.Story
 import com.umc.history.databinding.ItemStoryBinding
 
 

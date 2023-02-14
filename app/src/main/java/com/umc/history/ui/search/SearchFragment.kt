@@ -1,12 +1,9 @@
 package com.umc.history.ui.search
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,9 +13,10 @@ import com.umc.history.OneStory
 import com.umc.history.OneStoryView
 import com.umc.history.R
 import com.umc.history.databinding.FragmentSearchBinding
+import com.umc.history.util.Util
 import retrofit2.http.Body
 
-class SearchFragment : Fragment(), OneStoryView {
+class SearchFragment : Fragment(), OneStoryView, Util {
     lateinit var binding : FragmentSearchBinding
     private var storyDatas = ArrayList<Body>()
     var flag = 0
@@ -38,7 +36,7 @@ class SearchFragment : Fragment(), OneStoryView {
         binding.searchSearchEt.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
                 if (p1 == EditorInfo.IME_ACTION_SEARCH){
-                    hideKeyboard(binding.searchSearchEt)
+                    hideKeyboard(binding.searchSearchEt, requireContext())
                     return true
                 }
                 return false
@@ -68,11 +66,11 @@ class SearchFragment : Fragment(), OneStoryView {
         }
     }
 
-    private fun hideKeyboard(editText: EditText){
-        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-            hideSoftInputFromWindow(editText.windowToken, 0)
-        }
-    }
+//    private fun hideKeyboard(editText: EditText){
+//        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+//            hideSoftInputFromWindow(editText.windowToken, 0)
+//        }
+//    }
 
     override fun onStoryFailure() {
         Toast.makeText(activity,"인터넷 연결을 확인해주세요",Toast.LENGTH_SHORT).show()

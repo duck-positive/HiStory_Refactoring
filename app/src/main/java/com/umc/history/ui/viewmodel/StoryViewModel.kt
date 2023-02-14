@@ -1,7 +1,7 @@
 package com.umc.history.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.umc.history.Story
+import com.umc.history.data.Story
 import com.umc.history.data.StoryRepository
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.ui.detail
 
 import android.app.AlertDialog
 import android.content.Context
@@ -13,13 +13,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.umc.history.Comment
+import com.umc.history.LikeService
+import com.umc.history.R
+import com.umc.history.data.Story
 import com.umc.history.databinding.FragmentStoryDetailBinding
 import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
 
 
-class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, PostCommentView, LikeView{
+class StoryDetailFragment(story : Story) : Fragment() {
     lateinit var binding : FragmentStoryDetailBinding
     private var hashtagList = arrayListOf<String>()
     private var commentList = arrayListOf<Comment>()
@@ -104,8 +107,6 @@ class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, 
         return binding.root
     }
     private fun delete(){
-        val storyService = StoryService()
-        storyService.setDeleteView(this)
         val spf = activity?.getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
         val token = spf?.getString("accessToken",null)
 //        if(token == null){
@@ -126,8 +127,6 @@ class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, 
         startActivity(Intent.createChooser(intent,"메일 전송하기"))
     }
     private fun getComment(){
-        val commentService = CommentService()
-        commentService.setCommentView(this)
 //        commentService.getComments(story.postIdx)
     }
     private fun postComment(){
@@ -136,8 +135,6 @@ class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, 
         if(token == null){
             Toast.makeText(activity,"로그인이 되어있지 않습니다.",Toast.LENGTH_SHORT).show()
         } else{
-            val commentService = CommentService()
-            commentService.postCommentView(this)
             //commentService.postComment(token,story.postIdx, binding.storyCommentEt.text.toString())
         }
     }
@@ -172,8 +169,6 @@ class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, 
         val userSpf = activity?.getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
         val token = userSpf?.getString("accessToken", null)
         if(token != null){
-            val likeService = LikeService()
-            likeService.setLikeView(this)
 //            likeService.checkLike(token, story.postIdx)
         }
     }
@@ -185,70 +180,5 @@ class StoryDetailFragment(story : Story) : Fragment(), CommentView, DeleteView, 
         }
     }
 
-    override fun onCommentFailure() {
-        Toast.makeText(activity,"인터넷 연결을 확인해주세요",Toast.LENGTH_SHORT).show()
-    }
 
-    override fun onCommentLoading() {
-
-    }
-
-    override fun onCommentSuccess(status: String, body: List<Comment?>) {
-        if(body.isNotEmpty()){
-            for(comment in body){
-                commentList.add(comment!!)
-            }
-        }
-        binding.storyCommentRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.storyCommentRv.adapter = CommentRVAdapter(commentList)
-    }
-
-    override fun onDeleteFailure() {
-        Toast.makeText(activity,"게시글을 작성한 사람만 지울 수 있습니다.",Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDeleteLoading() {
-
-    }
-
-    override fun onDeleteSuccess(response: Boolean) {
-        (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_container, HomeFragment())
-            .commitAllowingStateLoss()
-    }
-
-    override fun postCommentFailure() {
-        Toast.makeText(activity,"인터넷 연결을 확인해주세요",Toast.LENGTH_SHORT).show()
-    }
-
-    override fun postCommentLoading() {
-
-    }
-
-    override fun postCommentSuccess() {
-        (context as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_container, StoryDetailFragment(story)).commitAllowingStateLoss()
-    }
-
-    override fun onLikeFailure() {
-        Toast.makeText(activity,"인터넷 연결을 확인해주세요",Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onLikeLoading() {
-
-    }
-
-    override fun onLikeSuccess(body: Boolean) {
-        when(body){
-            true ->{
-                binding.storyLikeIv.visibility = View.GONE
-                binding.storyLikeOnIv.visibility = View.VISIBLE
-            }
-            else ->{
-                binding.storyLikeIv.visibility = View.VISIBLE
-                binding.storyLikeOnIv.visibility = View.GONE
-            }
-        }
-        postLike()
-    }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.umc.history.databinding.ActivityLockSettingBinding
 import com.umc.history.databinding.ActivityProfileEditorBinding
 import retrofit2.Call
 import retrofit2.Callback

@@ -13,9 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.HiStoryApplication
 import com.umc.history.R
-import com.umc.history.Story
-import com.umc.history.StoryDetailFragment
+import com.umc.history.data.Story
 import com.umc.history.databinding.FragmentStoryBinding
+import com.umc.history.ui.detail.StoryDetailFragment
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
 

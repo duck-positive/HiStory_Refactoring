@@ -12,8 +12,8 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.umc.history.R
 import com.umc.history.auth.AuthInterface
-import com.umc.history.auth.LoginActivity
 import com.umc.history.databinding.FragmentHomeBinding
+import com.umc.history.ui.LoginActivity
 
 
 class HomeFragment: Fragment(), AuthInterface{

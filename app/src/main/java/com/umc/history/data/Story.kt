@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.data
 
 import android.graphics.Bitmap
 import androidx.room.ColumnInfo

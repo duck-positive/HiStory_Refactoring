@@ -1,4 +1,4 @@
-package com.umc.history.auth
+package com.umc.history.ui
 
 import android.content.Intent
 import android.os.Bundle

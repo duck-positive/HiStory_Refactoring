@@ -1,4 +1,4 @@
-package com.umc.history.auth
+package com.umc.history.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

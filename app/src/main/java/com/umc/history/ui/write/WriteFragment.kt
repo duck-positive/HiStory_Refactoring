@@ -1,8 +1,7 @@
-package com.umc.history
+package com.umc.history.ui.write
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
@@ -14,18 +13,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.umc.history.*
 import com.umc.history.databinding.FragmentWriteBinding
 import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
+import com.umc.history.ui.viewmodel.StoryViewModel
+import com.umc.history.ui.viewmodel.StoryViewModelFactory
+import com.umc.history.util.Util
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,25 +36,30 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class WriteFragment : Fragment() {
+class WriteFragment : Fragment(), Util {
     private val requiredPermission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     val PERMISSION_REQUEST_CODE = 10000
-    lateinit var binding : FragmentWriteBinding
+    private var _binding : FragmentWriteBinding? = null
+    val binding get() = _binding!!
     private var hashtagList = arrayListOf<String>()
     private var imageList = arrayListOf<Image>()
     private val REQUEST_GET_IMAGE = 105
     private var uriList = arrayListOf<Uri>()
     private var pathList = arrayListOf<MultipartBody.Part>()
-
+    private val storyViewModel : StoryViewModel by viewModels {
+        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentWriteBinding.inflate(inflater, container, false)
+        _binding = FragmentWriteBinding.inflate(inflater, container, false)
         binding.writeHashtagRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.writeHashtagRv.adapter = HashtagRVAdapter(hashtagList)
         var category = ""
+        Log.d("checked", "${binding.writeCategoryRb.checkedRadioButtonId}")
+        Log.d("checked", "${binding.writeCategoryRb.isSelected}")
         binding.writeCategoryRb.setOnCheckedChangeListener { _, id ->
             when (id){
                 R.id.write_category_korean_rb -> category = "KOREAN"
@@ -60,31 +67,20 @@ class WriteFragment : Fragment() {
                 R.id.write_category_oriental_rb -> category = "ASIAN"
                 R.id.write_category_etc_rb -> category = "ETC"
             }
+
+            Log.d("checked category", "${binding.writeCategoryRb.checkedRadioButtonId}, ${R.id.write_category_korean_rb}")
             hideWarning(binding.writeCategoryWarningIv,binding.writeCategoryWarningTv)
         }
 
         binding.writeConfirmBtn.setOnClickListener {
+            insertStory()
             val spf = context?.getSharedPreferences("token", AppCompatActivity.MODE_PRIVATE)
             val accessToken = spf?.getString("accessToken", null)
             when{
-                binding.writeTitleEt.text.isEmpty() -> showWarning(binding.writeTitleWarningIv, binding.writeTitleWarningTv)
-                category == "" -> showWarning(binding.writeCategoryWarningIv, binding.writeCategoryWarningTv)
+
                 else -> {
                     val storyService = StoryService()
                     val id = spf?.getString("id",null)
-                    if(uriList.isNotEmpty()) {
-                        for(path in uriList) {
-                            val file = File(absolutePath(path))
-                            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
-                            val body =
-                                MultipartBody.Part.createFormData("imageList", file.name, requestFile)
-                            pathList.add(body)
-                        }
-                        Log.d("image_test", "$pathList")
-                        //storyService.writeStory(accessToken,pathList, id!!, binding.writeTitleEt.text.toString(), category, binding.writeStoryEt.text.toString(), hashtagList)
-                    } else {
-                        //storyService.writeStory(accessToken, pathList, id!!, binding.writeTitleEt.text.toString(), category, binding.writeStoryEt.text.toString(), hashtagList)
-                    }
                     val spf = requireContext().getSharedPreferences("story", AppCompatActivity.MODE_PRIVATE)
                     val token = spf.edit()
                     token.putString("title",binding.writeTitleEt.text.toString())
@@ -106,7 +102,7 @@ class WriteFragment : Fragment() {
             if(p1){
             } else {
                 hideWarning(binding.writeTitleWarningIv,binding.writeTitleWarningTv)
-                hideKeyboard(binding.writeTitleEt)
+                hideKeyboard(binding.writeTitleEt, requireContext())
             }
         }
 
@@ -125,7 +121,7 @@ class WriteFragment : Fragment() {
                 if(hashtagList.size == 10){
 
                 }else if (p1 == EditorInfo.IME_ACTION_DONE){
-                    hideKeyboard(binding.writeHashtagEt)
+                    hideKeyboard(binding.writeHashtagEt, requireContext())
                     addHashTag()
                     return true
                 }
@@ -138,6 +134,25 @@ class WriteFragment : Fragment() {
         }
 
         return binding.root
+    }
+    private fun insertStory(){
+        if(binding.writeTitleEt.text.isEmpty()){
+            showWarning(binding.writeTitleWarningIv, binding.writeTitleWarningTv)
+        } else if(binding.writeCategoryRb.checkedRadioButtonId == -1){
+            showWarning(binding.writeCategoryWarningIv, binding.writeCategoryWarningTv)
+        } else {
+            if (uriList.isNotEmpty()) {
+                for (path in uriList) {
+                    val file = File(absolutePath(path))
+                    val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+                    val body =
+                        MultipartBody.Part.createFormData("imageList", file.name, requestFile)
+                    pathList.add(body)
+                }
+                //TODO("해시태그 추가")
+            }
+        }
+        //storyViewModel.insertStory()
     }
 
 
@@ -169,11 +184,11 @@ class WriteFragment : Fragment() {
     }
 
 
-    private fun hideKeyboard(editText: EditText){
-        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-            hideSoftInputFromWindow(editText.windowToken, 0)
-        }
-    }
+//    private fun hideKeyboard(editText: EditText){
+//        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+//            hideSoftInputFromWindow(editText.windowToken, 0)
+//        }
+//    }
 
     private fun showWarning(iv : ImageView, tv: TextView){
         iv.visibility = View.VISIBLE
@@ -217,5 +232,10 @@ class WriteFragment : Fragment() {
            }
        }
    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

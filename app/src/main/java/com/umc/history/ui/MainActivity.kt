@@ -2,19 +2,21 @@ package com.umc.history.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.kakao.sdk.auth.AuthApiClient
 import com.umc.history.R
 import com.umc.history.TestActivity
-import com.umc.history.WriteFragment
-import com.umc.history.auth.LoginViewModel
 import com.umc.history.databinding.ActivityMainBinding
 import com.umc.history.ui.home.HomeFragment
 import com.umc.history.ui.mypage.MyPageFragment
 import com.umc.history.ui.search.SearchFragment
+import com.umc.history.ui.viewmodel.LoginViewModel
+import com.umc.history.ui.write.WriteFragment
 
 class MainActivity : AppCompatActivity() {
     private var mBinding : ActivityMainBinding? = null
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.selectedItemId = R.id.nav_home
         supportFragmentManager
             .beginTransaction()
-            .replace(binding.flContainer.id, HomeFragment())
+            .add(binding.flContainer.id, HomeFragment())
             .commitAllowingStateLoss()
         binding.bnvMain.setOnItemSelectedListener {
             changeFragment(it.itemId)
@@ -50,7 +52,15 @@ class MainActivity : AppCompatActivity() {
         } else {
             when(menuId){
                 R.id.nav_home -> replaceFragment(HomeFragment())
-                R.id.nav_writing -> replaceFragment(WriteFragment())
+                R.id.nav_writing -> {
+                    //TODO("1. token validation check 필요
+                    //      2. navigation item select 상태 유지 필요")
+                    if(AuthApiClient.instance.hasToken()){
+                        replaceFragment(WriteFragment())
+                    } else {
+                        Toast.makeText(this, "로그인 후 작성할 수 있습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 R.id.nav_my_page -> replaceFragment(MyPageFragment())
                 R.id.nav_search -> replaceFragment(SearchFragment())
                 R.id.nav_quiz -> {

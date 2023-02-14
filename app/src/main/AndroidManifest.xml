@@ -39,11 +39,8 @@
                     android:scheme="kakao072dc56b8e4fc5dc680c3e6bd92d52b9"/>
             </intent-filter>
         </activity>
-        <activity android:name=".auth.LoginActivity"/>
-        <activity
-            android:name=".LockActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTask" />
+        <activity android:name=".ui.LoginActivity"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">

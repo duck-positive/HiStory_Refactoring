@@ -1,7 +1,6 @@
 package com.umc.history.data
 
 import androidx.annotation.WorkerThread
-import com.umc.history.Story
 import kotlinx.coroutines.flow.Flow
 
 class StoryRepository(private val storyDao: StoryDao) {
