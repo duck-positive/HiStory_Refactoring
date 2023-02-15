@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.umc.history.databinding.ActivityQuestionBinding
 
 class QuestionActivity: AppCompatActivity(){
-    lateinit var binding: ActivityQuestionBinding
+    private var _binding: ActivityQuestionBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityQuestionBinding.inflate(layoutInflater)
+        _binding = ActivityQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
     override fun onResume() {

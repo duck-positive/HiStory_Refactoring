@@ -15,5 +15,5 @@ interface StoryDao {
     fun getStoryByCategory(category: String) : Flow<List<Story>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(story: Story)
+    suspend fun insertStory(story: Story)
 }

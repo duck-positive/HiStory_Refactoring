@@ -16,24 +16,29 @@ class TestActivity : AppCompatActivity(), TestView {
 
         mBinding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.testExitLy.setOnClickListener{
             val intent = Intent(applicationContext,MainActivity::class.java)
             startActivity(intent)
         }
+
         binding.testAllIv.setOnClickListener {
-            getTest("all")
+            changeFragment("all")
         }
         binding.testKoreanHistoryIv.setOnClickListener {
-            getTest("KOREAN")
+            changeFragment("KOREAN")
         }
         binding.testOrientalIv.setOnClickListener {
-            getTest("ASIAN")
+            changeFragment("ASIAN")
         }
         binding.testWesternIv.setOnClickListener {
-            getTest("WESTERN")
+            changeFragment("WESTERN")
         }
 
 
+    }
+    private fun changeFragment(category : String){
+        getTest(category)
     }
 
     override fun onGetTestSuccess(body: List<Test>?) {

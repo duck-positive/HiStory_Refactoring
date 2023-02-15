@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.OneStory
 import com.umc.history.OneStoryView
-import com.umc.history.databinding.FragmentMypageLikestoryBinding
+import com.umc.history.databinding.FragmentMypageMyStoryBinding
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 
 class MyPageMyStoryFragment: Fragment(), OneStoryView {
-    lateinit var binding: FragmentMypageLikestoryBinding
+    lateinit var binding: FragmentMypageMyStoryBinding
     private var myPageStoryDatas = ArrayList<Body>()
     private var token : String? = null
 
@@ -25,12 +26,12 @@ class MyPageMyStoryFragment: Fragment(), OneStoryView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMypageLikestoryBinding.inflate(inflater,container,false)
+        binding = FragmentMypageMyStoryBinding.inflate(inflater,container,false)
         //더미데이터랑 어댑터 연결
         val spf = activity?.getSharedPreferences("token", AppCompatActivity.MODE_PRIVATE)
         val token = spf?.getString("accessToken", null)
         if(token == null){
-            binding.myPageStoryRecyclerView.visibility = View.GONE
+            binding.homeStoryRecyclerView.visibility = View.GONE
         } else {
 
 
@@ -55,9 +56,9 @@ class MyPageMyStoryFragment: Fragment(), OneStoryView {
 
 
         val dividerItemDecoration =
-            DividerItemDecoration(binding.myPageStoryRecyclerView.context, LinearLayoutManager(activity).orientation)
+            DividerItemDecoration(binding.homeStoryRecyclerView.context, LinearLayoutManager(activity).orientation)
 
-        binding.myPageStoryRecyclerView.addItemDecoration(dividerItemDecoration)
+        binding.homeStoryRecyclerView.addItemDecoration(dividerItemDecoration)
 
 
         return binding.root

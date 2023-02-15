@@ -10,7 +10,7 @@ class MyPageViewPagerAdapter(fragment: MyPageFragment): FragmentStateAdapter(fra
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0-> MyPageMyStoryFragment()
-            else-> MyPageLikeStoryFragment()
+            else-> MyPageMyStoryFragment()
         }
     }
 }
