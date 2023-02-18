@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="220dp"
-        tools:listitem="@layout/item_mypage_story"
+        tools:listitem="@layout/item_preview_story"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/search_search_lo"

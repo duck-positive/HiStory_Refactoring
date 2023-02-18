@@ -24,10 +24,7 @@ public abstract class StoryRoomDatabase : RoomDatabase(){
                 scope.launch {
                     var storyDao = database.storyDao()
                     Log.d("insert", "insert")
-                    storyDao.insertStory(
 
-                        Story(1, "daddd")
-                    )
                 }
             }
         }

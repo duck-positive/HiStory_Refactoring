@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_test_ly"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
+        android:id="@+id/quiz_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,7 +17,7 @@
         android:textSize="21sp"
         />
     <LinearLayout
-        android:id="@+id/test_exit_ly"
+        android:id="@+id/quiz_exit_ly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
         android:layout_marginTop="160dp"
         />
     <ImageView
-        android:id="@+id/test_all_iv"
+        android:id="@+id/quiz_category_all_iv"
         android:layout_width="170dp"
         android:layout_height="200dp"
         android:src="@drawable/test_all"
@@ -61,7 +61,7 @@
         android:layout_marginTop="240dp"
         />
     <ImageView
-        android:id="@+id/test_korean_history_iv"
+        android:id="@+id/quiz_category_korean_iv"
         android:layout_width="170dp"
         android:layout_height="200dp"
         android:src="@drawable/test_korean_history"
@@ -72,28 +72,23 @@
         />
 
     <ImageView
-        android:id="@+id/test_oriental_iv"
+        android:id="@+id/quiz_category_oriental_iv"
         android:layout_width="170dp"
         android:layout_height="200dp"
         android:src="@drawable/test_oriental_history"
-        app:layout_constraintTop_toBottomOf="@+id/test_all_iv"
-        app:layout_constraintStart_toStartOf="@+id/test_all_iv"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_category_all_iv"
+        app:layout_constraintStart_toStartOf="@+id/quiz_category_all_iv"
         android:layout_marginTop="17dp"
         />
 
     <ImageView
-        android:id="@+id/test_western_iv"
+        android:id="@+id/quiz_category_western_iv"
         android:layout_width="170dp"
         android:layout_height="200dp"
         android:src="@drawable/test_western_history"
-        app:layout_constraintTop_toBottomOf="@+id/test_korean_history_iv"
-        app:layout_constraintStart_toStartOf="@+id/test_korean_history_iv"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_category_korean_iv"
+        app:layout_constraintStart_toStartOf="@+id/quiz_category_korean_iv"
         android:layout_marginTop="17dp"
         />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

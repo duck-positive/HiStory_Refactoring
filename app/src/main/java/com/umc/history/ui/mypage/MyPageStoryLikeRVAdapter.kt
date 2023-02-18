@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.umc.history.LikedResponse
-import com.umc.history.databinding.ItemMypageStoryBinding
+import com.umc.history.databinding.ItemPreviewStoryBinding
 
 class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedResponse>) : RecyclerView.Adapter<MyPageStoryLikeRVAdapter.ViewHolder>(){
 
@@ -23,7 +23,7 @@ class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedRespo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemMypageStoryBinding = ItemMypageStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding: ItemPreviewStoryBinding = ItemPreviewStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return ViewHolder(binding)
     }
@@ -41,7 +41,7 @@ class MyPageStoryLikeRVAdapter (private val myPageStoryList:ArrayList<LikedRespo
 //    fun addStories()
     //뷰홀더
 
-    inner class ViewHolder(val binding: ItemMypageStoryBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding: ItemPreviewStoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(myPageStory: LikedResponse){
             binding.itemMyPageStoryTitleTv.text=myPageStory.post?.title
             binding.itemMyPageStoryDetailTv.text=myPageStory.post?.contents

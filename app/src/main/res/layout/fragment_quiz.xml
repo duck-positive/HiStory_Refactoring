@@ -51,44 +51,26 @@
         android:textSize="21sp"
         />
 
-    <ImageView
-        android:id="@+id/question_answer_selected_o_iv"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/quiz_answer_true_iv"
         android:layout_width="93dp"
         android:layout_height="93dp"
-        android:src="@drawable/test_answer_selected_o"
-        app:layout_constraintStart_toStartOf="@+id/question_next_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="388dp"
-        android:visibility="gone"
-        />
-    <ImageView
-        android:id="@+id/question_answer_notselected_o_iv"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:src="@drawable/test_answer_notselected_o"
+        android:background="@drawable/quiz_answer_true_selector"
         app:layout_constraintStart_toStartOf="@+id/question_next_iv"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="388dp"
         />
-    <ImageView
-        android:id="@+id/question_answer_selected_x_iv"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/quiz_answer_false_iv"
         android:layout_width="93dp"
         android:layout_height="93dp"
-        android:src="@drawable/test_answer_selected_x"
+        android:background="@drawable/quiz_answer_false_selector"
         app:layout_constraintEnd_toEndOf="@+id/question_next_iv"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="388dp"
-        android:visibility="gone"
+
         />
-    <ImageView
-        android:id="@+id/question_answer_notselected_x_iv"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:src="@drawable/test_answer_notselected_x"
-        app:layout_constraintEnd_toEndOf="@+id/question_next_iv"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="388dp"
-        />
+
     <ImageView
         android:id="@+id/question_next_iv"
         android:layout_width="290dp"

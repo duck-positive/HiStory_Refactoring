@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.umc.history.databinding.ItemMypageStoryBinding
+import com.umc.history.databinding.ItemPreviewStoryBinding
 import retrofit2.http.Body
 
 class SearchStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : RecyclerView.Adapter<SearchStoryRVAdapter.ViewHolder>(){
@@ -23,7 +23,7 @@ class SearchStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemMypageStoryBinding = ItemMypageStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding: ItemPreviewStoryBinding = ItemPreviewStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return ViewHolder(binding)
     }
@@ -38,7 +38,7 @@ class SearchStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
     override fun getItemCount(): Int = myPageStoryList.size
 
 
-    inner class ViewHolder(val binding: ItemMypageStoryBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding: ItemPreviewStoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(searchStory: Body){
 
 //            Glide.with(context)

@@ -32,6 +32,7 @@ class MyPageFragment : Fragment(), AuthInterface {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         checkLogin()
+        buildDialog()
         binding.myPageLoginIb.setOnClickListener{
             login()
         }
@@ -39,7 +40,7 @@ class MyPageFragment : Fragment(), AuthInterface {
 
 
         val builder = AlertDialog.Builder(activity)
-        val dialogView = layoutInflater.inflate(R.layout.dialog01, null)
+        val dialogView = layoutInflater.inflate(R.layout.bottomdialog_mypage, null)
         builder.setView(dialogView)
 
         val alertDialog = builder.create()
@@ -50,16 +51,8 @@ class MyPageFragment : Fragment(), AuthInterface {
 
         fun showDialog(){
             alertDialog.show()
-//            alertDialog.findViewById<TextView>(R.id.dialog01_profile).setOnClickListener{
-//                val intent = Intent(activity,ProfileEditorActivity::class.java)
-//                startActivity(intent)
-//            }
-//            alertDialog.findViewById<TextView>(R.id.dialog01_lock_setting).setOnClickListener{
-//                val intent = Intent(activity,LockSettingActivity::class.java)
-//                startActivity(intent)
-//            }
 
-            alertDialog.findViewById<TextView>(R.id.dialog01_logout).setOnClickListener{
+            alertDialog.findViewById<TextView>(R.id.bottomdialog_mypage_logout).setOnClickListener{
                 logout()
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
@@ -73,6 +66,9 @@ class MyPageFragment : Fragment(), AuthInterface {
         }
 
         return binding.root
+    }
+    private fun buildDialog(){
+
     }
 
     override fun login(){

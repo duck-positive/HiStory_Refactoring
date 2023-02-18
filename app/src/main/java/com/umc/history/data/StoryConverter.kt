@@ -6,7 +6,7 @@ import com.google.gson.Gson
 
 class StoryConverter {
     @TypeConverter
-    fun imageListToJson(imageList : List<Bitmap>?) = Gson().toJson(imageList)
+    fun imageListToJson(imageList : List<Bitmap>) = Gson().toJson(imageList)
 
     @TypeConverter
     fun jsonToImageList(value : String) = Gson().fromJson(value, Array<Bitmap>::class.java).toList()

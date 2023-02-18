@@ -18,7 +18,7 @@ android {
         targetSdk 31
         versionCode 5
         versionName "5"
-        buildConfigField "String", "app_key",properties['kakao_app_key']
+        buildConfigField "String", "app_key", properties['kakao_app_key']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

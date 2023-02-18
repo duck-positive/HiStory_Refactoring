@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.kakao.sdk.auth.AuthApiClient
 import com.umc.history.R
-import com.umc.history.TestActivity
+import com.umc.history.ui.quiz.QuizActivity
 import com.umc.history.databinding.ActivityMainBinding
 import com.umc.history.ui.home.HomeFragment
 import com.umc.history.ui.mypage.MyPageFragment
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_my_page -> replaceFragment(MyPageFragment())
                 R.id.nav_search -> replaceFragment(SearchFragment())
                 R.id.nav_quiz -> {
-                    val intent = Intent(applicationContext, TestActivity::class.java)
+                    val intent = Intent(applicationContext, QuizActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.nav_my_page -> replaceFragment(MyPageFragment())
                     R.id.nav_search -> replaceFragment(SearchFragment())
                     R.id.nav_quiz -> {
-                        val intent = Intent(applicationContext, TestActivity::class.java)
+                        val intent = Intent(applicationContext, QuizActivity::class.java)
                         startActivity(intent)
                     }
                 }

@@ -44,7 +44,7 @@ class StoryFragment(private val type : Int): Fragment() {
         builder.setView(dialogView)
 
         binding.homeStoryAlignIv.setOnClickListener {
-            storyViewModel.insertStory(Story(2, "dasdasd"))
+            //storyViewModel.insertStory(Story(2, "dasdasd"))
             alertDialog.show()
             alertDialog.findViewById<TextView>(R.id.dialog_like_tv).setOnClickListener {
                 alertDialog.hide()
