@@ -1,24 +1,32 @@
-package com.umc.history
+package com.umc.history.ui.quiz
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.umc.history.databinding.ActivityQuestionAnswerBinding
-import com.umc.history.ui.quiz.QuizActivity
+import com.umc.history.R
+import com.umc.history.databinding.FragmentQuizAnswerBinding
 
 class QuizAnswerFragment : Fragment() {
-    lateinit var binding : ActivityQuestionAnswerBinding
+    private var _binding : FragmentQuizAnswerBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        _binding = FragmentQuizAnswerBinding.inflate(inflater, container, false)
+
+        binding.quetionAnswerNextBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.quiz_container, QuizFragment())
+                .commitAllowingStateLoss()
+        }
+
+
+        return binding.root
     }
 
 

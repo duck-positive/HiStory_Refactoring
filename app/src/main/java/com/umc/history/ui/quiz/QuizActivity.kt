@@ -22,5 +22,9 @@ class QuizActivity : AppCompatActivity() {
             .beginTransaction()
             .add(binding.quizContainer.id, QuizCategoryFragment())
             .commitAllowingStateLoss()
+
+        binding.questionExitBtn.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 }

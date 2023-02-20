@@ -1,12 +1,11 @@
 package com.umc.history.ui.quiz
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.umc.history.QuizAnswerFragment
 import com.umc.history.R
 
 import com.umc.history.databinding.FragmentQuizBinding
@@ -22,10 +21,14 @@ class QuizFragment : Fragment(){
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
 
         binding.questionNextIv.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.quiz_container, QuizAnswerFragment())
-                .commitAllowingStateLoss()
+            if(binding.quizAnswerTrueIv.isSelected || binding.quizAnswerFalseIv.isSelected){
+                parentFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.quiz_container, QuizAnswerFragment())
+                    .commitAllowingStateLoss()
+            } else {
+                Toast.makeText(requireContext(), "답을 선택해주세요", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.quizAnswerTrueIv.setOnClickListener {

@@ -24,7 +24,7 @@ class StoryFragment(private val type : Int): Fragment() {
     private var _binding : FragmentStoryBinding? = null
     private val binding get() = _binding!!
     private val storyViewModel : StoryViewModel by viewModels {
-        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
+        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).storyRepository)
     }
 
     override fun onCreateView(

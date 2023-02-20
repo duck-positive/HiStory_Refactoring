@@ -10,10 +10,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Story::class), version = 3, exportSchema = true)
+@Database(entities = [Story::class, Quiz::class] , version = 3, exportSchema = true)
 @TypeConverters(StoryConverter::class)
-public abstract class StoryRoomDatabase : RoomDatabase(){
+public abstract class AppRoomDatabase : RoomDatabase(){
     abstract fun storyDao() : StoryDao
+    abstract fun quizDao() : QuizDao
 
     private class StoryDatabaseCallback(
         private val scope : CoroutineScope
@@ -31,17 +32,17 @@ public abstract class StoryRoomDatabase : RoomDatabase(){
     }
     companion object {
         @Volatile
-        private var INSTANCE : StoryRoomDatabase? = null
+        private var INSTANCE : AppRoomDatabase? = null
 
         fun getDatabase(
             context : Context,
             scope : CoroutineScope
-        ) : StoryRoomDatabase {
+        ) : AppRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    StoryRoomDatabase::class.java,
-                    "story_database"
+                    AppRoomDatabase::class.java,
+                    "app_database"
                 )
                     .addCallback(StoryDatabaseCallback(scope))
                     .build()

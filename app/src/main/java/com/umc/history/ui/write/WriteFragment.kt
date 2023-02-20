@@ -47,7 +47,7 @@ class WriteFragment : Fragment(), Util {
     private var uriList = arrayListOf<Uri>()
     private var pathList = arrayListOf<MultipartBody.Part>()
     private val storyViewModel : StoryViewModel by viewModels {
-        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).repository)
+        StoryViewModelFactory((requireContext().applicationContext as HiStoryApplication).storyRepository)
     }
     override fun onCreateView(
         inflater: LayoutInflater,

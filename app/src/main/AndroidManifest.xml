@@ -26,8 +26,6 @@
         <activity android:name=".ProfileEditorActivity" />
         <activity android:name=".SettingLogoutActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
-        <activity android:name=".QuestionActivity" />
-        <activity android:name=".QuestionAnswerActivity" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
