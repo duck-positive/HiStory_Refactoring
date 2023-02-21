@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.umc.history.Comment
-import com.umc.history.LikeService
 import com.umc.history.R
 import com.umc.history.data.Story
 import com.umc.history.databinding.FragmentStoryDetailBinding
@@ -149,28 +148,10 @@ class StoryDetailFragment(story : Story) : Fragment() {
 //        }
     }
     private fun postLike(){
-        val userSpf = requireContext().getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
-        val token = userSpf.getString("accessToken", null)
-        if(token == null){
-            Toast.makeText(requireContext(),"로그인이 되어 있지 않습니다", Toast.LENGTH_SHORT).show()
-        } else {
-            val likeService = LikeService()
-//            likeService.postLike(token, story.postIdx)
-            if(binding.storyLikeOnIv.visibility == View.VISIBLE){
-                binding.storyLikeOnIv.visibility = View.GONE
-                binding.storyLikeIv.visibility = View.VISIBLE
-            } else {
-                binding.storyLikeOnIv.visibility = View.VISIBLE
-                binding.storyLikeIv.visibility = View.GONE
-            }
-        }
+
     }
     private fun checkLike(){
-        val userSpf = activity?.getSharedPreferences("token",AppCompatActivity.MODE_PRIVATE)
-        val token = userSpf?.getString("accessToken", null)
-        if(token != null){
-//            likeService.checkLike(token, story.postIdx)
-        }
+
     }
 
 

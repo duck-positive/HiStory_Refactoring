@@ -1,27 +1,43 @@
 package com.umc.history.ui.quiz
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.umc.history.HiStoryApplication
 import com.umc.history.R
 
 import com.umc.history.databinding.FragmentQuizBinding
+import com.umc.history.ui.MainActivity
+import com.umc.history.ui.viewmodel.QuizViewModel
+import com.umc.history.ui.viewmodel.QuizViewModelFactory
 
 class QuizFragment : Fragment(){
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
+    private val quizViewModel : QuizViewModel by activityViewModels {
+        QuizViewModelFactory((requireContext().applicationContext as HiStoryApplication).quizRepository)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
+        quizViewModel.quizList.observe(viewLifecycleOwner, Observer {
+            quiz -> binding.quizQuizTv.text = quiz[0].question
+        })
 
         binding.questionNextIv.setOnClickListener {
             if(binding.quizAnswerTrueIv.isSelected || binding.quizAnswerFalseIv.isSelected){
+
                 parentFragmentManager
                     .beginTransaction()
                     .replace(R.id.quiz_container, QuizAnswerFragment())

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/question_question_tv"
+        android:id="@+id/quiz_quiz_tv"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
@@ -24,7 +24,7 @@
         android:layout_height="93dp"
         android:background="@drawable/quiz_answer_true_selector"
         app:layout_constraintStart_toStartOf="@+id/question_next_iv"
-        app:layout_constraintTop_toBottomOf="@id/question_question_tv"
+        app:layout_constraintTop_toBottomOf="@id/quiz_quiz_tv"
         android:layout_marginTop="133dp"
         />
     <androidx.appcompat.widget.AppCompatImageButton

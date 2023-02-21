@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.umc.history.HiStoryApplication
 import com.umc.history.R
@@ -19,7 +20,7 @@ class QuizCategoryFragment : Fragment() {
 
     private var _binding : FragmentQuizCategoryBinding? = null
     private val binding get() = _binding!!
-    private val quizViewModel : QuizViewModel by viewModels {
+    private val quizViewModel : QuizViewModel by activityViewModels {
         QuizViewModelFactory((requireContext().applicationContext as HiStoryApplication).quizRepository)
     }
     override fun onCreateView(
@@ -31,6 +32,13 @@ class QuizCategoryFragment : Fragment() {
 
         binding.quizCategoryAllIv.setOnClickListener {
             quizViewModel.getQuiz("ALL")
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.quiz_container, QuizFragment())
+                .commitAllowingStateLoss()
+        }
+        binding.quizCategoryKoreanIv.setOnClickListener {
+            quizViewModel.getQuiz("KOREAN")
             parentFragmentManager
                 .beginTransaction()
                 .replace(R.id.quiz_container, QuizFragment())
