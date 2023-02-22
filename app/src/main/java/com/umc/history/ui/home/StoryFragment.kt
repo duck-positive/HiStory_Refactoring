@@ -1,7 +1,9 @@
 package com.umc.history.ui.home
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.HiStoryApplication
 import com.umc.history.R
@@ -18,6 +20,8 @@ import com.umc.history.databinding.FragmentStoryBinding
 import com.umc.history.ui.detail.StoryDetailFragment
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class StoryFragment(private val type : Int): Fragment() {
 
@@ -33,6 +37,7 @@ class StoryFragment(private val type : Int): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStoryBinding.inflate(inflater,container,false)
+        //insertDummy()
         checkType(type)
 
         val builder = AlertDialog.Builder(activity)
@@ -70,16 +75,15 @@ class StoryFragment(private val type : Int): Fragment() {
         storyRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         when(type) {
-            0 -> {
-                storyViewModel.allStory.observe(viewLifecycleOwner, Observer { story ->
-                    story.let { adapter.submitList(it) }
-                })
+            0 -> viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    storyViewModel.allStory.collect { adapter.submitList(it) }
+                }
             }
-
-            1 -> {
-                storyViewModel.koreanStory.observe(viewLifecycleOwner, Observer { story->
-                    story.let { adapter.submitList(it) }
-                })
+            1 -> viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    storyViewModel.koreanStory.collect { adapter.submitList(it) }
+                }
             }
 
             2-> {
@@ -94,6 +98,20 @@ class StoryFragment(private val type : Int): Fragment() {
                 })
             }
         }
+    }
+    fun insertDummy(){
+        val vit = Bitmap.createBitmap(1,2, Bitmap.Config.ARGB_8888)
+        storyViewModel.insertStory(Story(1,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(3,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(4,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(5,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(6,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(7,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(8,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(9,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(10,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(11,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(12,"KOREAN","da", "da", listOf(vit), listOf("da")))
     }
 
     override fun onDestroyView() {

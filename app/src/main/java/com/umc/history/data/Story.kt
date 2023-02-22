@@ -12,7 +12,7 @@ data class Story(
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "content") var content: String? =null,
     @ColumnInfo(name = "img") val img: List<Bitmap>,
-    @ColumnInfo(name = "hashTag") val hashTag : List<String>? = null,
+    @ColumnInfo(name = "hashTag") val hashTag : List<String>,
     @ColumnInfo(name = "likeNumber") var likeNumber: Int = 0,
     @ColumnInfo(name = "commentNumber") var commentNumber: Int = 0
 

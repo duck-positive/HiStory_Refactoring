@@ -31,21 +31,26 @@ class QuizCategoryFragment : Fragment() {
         _binding = FragmentQuizCategoryBinding.inflate(inflater, container,false)
 
         binding.quizCategoryAllIv.setOnClickListener {
-            quizViewModel.getQuiz("ALL")
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.quiz_container, QuizFragment())
-                .commitAllowingStateLoss()
+            changeFragment("ALL")
         }
         binding.quizCategoryKoreanIv.setOnClickListener {
-            quizViewModel.getQuiz("KOREAN")
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.quiz_container, QuizFragment())
-                .commitAllowingStateLoss()
+            changeFragment("KOREAN")
+        }
+        binding.quizCategoryOrientalIv.setOnClickListener {
+            changeFragment("ORIENTAL")
+        }
+        binding.quizCategoryWesternIv.setOnClickListener {
+            changeFragment("WESTERN")
         }
 
         return binding.root
+    }
+    fun changeFragment(category : String){
+        quizViewModel.getQuiz(category)
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.quiz_container, QuizFragment())
+            .commitAllowingStateLoss()
     }
 
     override fun onDestroyView() {

@@ -15,28 +15,24 @@ import com.umc.history.databinding.ActivityMainBinding
 import com.umc.history.ui.home.HomeFragment
 import com.umc.history.ui.mypage.MyPageFragment
 import com.umc.history.ui.search.SearchFragment
-import com.umc.history.ui.viewmodel.LoginViewModel
 import com.umc.history.ui.write.WriteFragment
 
 class MainActivity : AppCompatActivity() {
     private var mBinding : ActivityMainBinding? = null
     private val binding get() = mBinding!!
-    private val loginViewModel : LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var token : String? = null
-        val loginObserver = Observer<String> { loginToken ->
-            token = loginToken
-        }
-        loginViewModel.currentAccessToken.observe( this, loginObserver)
 
         binding.bnvMain.selectedItemId = R.id.nav_home
+
         supportFragmentManager
             .beginTransaction()
             .add(binding.flContainer.id, HomeFragment())
             .commitAllowingStateLoss()
+
         binding.bnvMain.setOnItemSelectedListener {
             changeFragment(it.itemId)
             true

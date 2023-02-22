@@ -1,6 +1,7 @@
 package com.umc.history.data
 
 import android.graphics.Bitmap
+import androidx.annotation.Nullable
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 
@@ -12,7 +13,7 @@ class StoryConverter {
     fun jsonToImageList(value : String) = Gson().fromJson(value, Array<Bitmap>::class.java).toList()
 
     @TypeConverter
-    fun stringListToJson(hashTagList : List<String>?) = Gson().toJson(hashTagList)
+    fun stringListToJson(hashTagList : List<String>) = Gson().toJson(hashTagList)
 
     @TypeConverter
     fun jsonToStringList(value : String) = Gson().fromJson(value, Array<String>::class.java).toList()

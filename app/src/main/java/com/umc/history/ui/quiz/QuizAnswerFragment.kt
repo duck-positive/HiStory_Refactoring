@@ -23,20 +23,24 @@ class QuizAnswerFragment : Fragment() {
     private val quizViewModel : QuizViewModel by activityViewModels {
         QuizViewModelFactory((requireContext().applicationContext as HiStoryApplication).quizRepository)
     }
+    private var answer : Boolean? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentQuizAnswerBinding.inflate(inflater, container, false)
-        quizViewModel.quizList.observe(viewLifecycleOwner, Observer {
-         quiz ->
-            if(quiz[0].answer) binding.questionAnswerTv.text = "정답입니다"
+
+        parentFragmentManager.setFragmentResultListener("ANSWER", this) { _, bundle ->
+            answer = bundle.getBoolean("bundleKey")
+        }
+
+        quizViewModel.quizList.observe(viewLifecycleOwner, Observer { quiz ->
+            if(answer == quiz[0].answer) binding.questionAnswerTv.text = "정답입니다"
             else binding.questionAnswerTv.text = "오답입니다"
             quizViewModel.removeSolvedQuiz()
             Log.d("quiz_answer", "${quiz.toString()}")
         })
-
 
         binding.quetionAnswerNextBtn.setOnClickListener {
             if (quizViewModel.quizList.value!!.isEmpty()){

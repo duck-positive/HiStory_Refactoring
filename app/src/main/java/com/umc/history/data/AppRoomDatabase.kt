@@ -6,11 +6,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Story::class, Quiz::class] , version = 3, exportSchema = true)
+@Database(entities = [Story::class, Quiz::class] , version = 1, exportSchema = true)
 @TypeConverters(StoryConverter::class)
 public abstract class AppRoomDatabase : RoomDatabase(){
     abstract fun storyDao() : StoryDao
