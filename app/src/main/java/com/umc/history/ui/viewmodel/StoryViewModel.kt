@@ -4,17 +4,21 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.umc.history.data.Story
 import com.umc.history.data.StoryRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class StoryViewModel(private val repository: StoryRepository) : ViewModel() {
-    val allStory = repository.allStory
-    val koreanStory = repository.koreanStory
-    val orientalStory : LiveData<List<Story>> = getStoryByCategory("ORIENTAL")
-    val westernStory : LiveData<List<Story>> = getStoryByCategory("WESTERN")
-    private fun getStoryByCategory(category : String) : LiveData<List<Story>>{
-        Log.d("collext", "dad")
-        return repository.getStoryByCategory(category).asLiveData()
-    }
+    private val _allStory = repository.allStory
+    val allStory get() = _allStory
+
+    private val _koreanStory = repository.getStoryByCategory("KOREAN")
+    val koreanStory get() = _koreanStory
+
+    private val _orientalStory = repository.getStoryByCategory("ORIENTAL")
+    val orientalStory get() = _orientalStory
+
+    private val _westernStory = repository.getStoryByCategory("WESTERN")
+    val westernStory get() = _westernStory
     fun insertStory(story: Story) = viewModelScope.launch {
         repository.insertStory(story)
     }

@@ -79,7 +79,7 @@ class WriteFragment : Fragment(), Util {
             when{
 
                 else -> {
-                    val storyService = StoryService()
+
                     val id = spf?.getString("id",null)
                     val spf = requireContext().getSharedPreferences("story", AppCompatActivity.MODE_PRIVATE)
                     val token = spf.edit()

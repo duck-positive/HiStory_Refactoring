@@ -14,6 +14,10 @@ interface StoryDao {
     @Query("SELECT * FROM story_table WHERE category = :category")
     fun getStoryByCategory(category: String) : Flow<List<Story>>
 
+    @Query("SELECT * FROM story_table WHERE userId = :userId")
+    fun getStoryWriteByUser(userId : Long) : Flow<List<Story>>
+
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertStory(story: Story)
 }

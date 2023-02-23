@@ -13,8 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.umc.history.Comment
 import com.umc.history.R
+import com.umc.history.data.Comment
 import com.umc.history.data.Story
 import com.umc.history.databinding.FragmentStoryDetailBinding
 import com.umc.history.ui.MainActivity

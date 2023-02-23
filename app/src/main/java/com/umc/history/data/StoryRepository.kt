@@ -1,19 +1,10 @@
 package com.umc.history.data
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.flow.*
 
 class StoryRepository(private val storyDao: StoryDao) {
     val allStory : Flow<List<Story>> = storyDao.getAllStory()
-    val koreanStory = allStory
-        .map {
-            it.filter {
-                it.category == "KOREAN"
-            }
-        }
 
     fun getStoryByCategory(category: String) : Flow<List<Story>> {
         return allStory.map { storyList ->
@@ -22,6 +13,10 @@ class StoryRepository(private val storyDao: StoryDao) {
             }
         }
     }
+    fun getStoryWriteByUser(userId: Long) : Flow<List<Story>> {
+        return storyDao.getStoryWriteByUser(userId)
+    }
+    fun getLikedStoryByUser(){}
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.OneStory
-import com.umc.history.OneStoryView
 import com.umc.history.R
 import com.umc.history.databinding.FragmentSearchBinding
 import com.umc.history.util.Util
 import retrofit2.http.Body
 
-class SearchFragment : Fragment(), OneStoryView, Util {
+class SearchFragment : Fragment(), Util {
     lateinit var binding : FragmentSearchBinding
     private var storyDatas = ArrayList<Body>()
     var flag = 0
@@ -71,18 +70,5 @@ class SearchFragment : Fragment(), OneStoryView, Util {
 //            hideSoftInputFromWindow(editText.windowToken, 0)
 //        }
 //    }
-
-    override fun onStoryFailure() {
-        Toast.makeText(activity,"인터넷 연결을 확인해주세요",Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onStoryLoading() {
-
-    }
-
-    override fun onStorySuccess(status: String, body: OneStory?) {
-//        (context as MainActivity).supportFragmentManager.beginTransaction()
-//            .replace(R.id.fl_container, StoryDetailFragment(body!!)).commitAllowingStateLoss()
-    }
 
 }

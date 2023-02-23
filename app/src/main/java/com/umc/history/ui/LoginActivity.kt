@@ -2,6 +2,7 @@ package com.umc.history.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -26,10 +27,12 @@ class LoginActivity : AppCompatActivity() {
         binding.loginKakaoIb.setOnClickListener {
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
-
+                    Log.d("error", "${error.toString()}")
                 } else if (token != null) {
+                    Log.d("token_check", "${token.toString()}")
                     exitLogin()
                 }
+                Log.d("token == null", "${token}")
             }
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
@@ -47,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+                //Log.d("user", "${AuthAp.instance}")
             }
         }
 

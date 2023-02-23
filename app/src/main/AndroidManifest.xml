@@ -23,7 +23,6 @@
             android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustPan" />
         
-        <activity android:name=".ProfileEditorActivity" />
         <activity android:name=".SettingLogoutActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity
@@ -40,7 +39,7 @@
         <activity android:name=".ui.LoginActivity"/>
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

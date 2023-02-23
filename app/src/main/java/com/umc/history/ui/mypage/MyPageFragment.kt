@@ -10,19 +10,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
+import com.umc.history.HiStoryApplication
 import com.umc.history.R
 import com.umc.history.auth.AuthInterface
 import com.umc.history.databinding.FragmentMypageBinding
 import com.umc.history.ui.LoginActivity
+import com.umc.history.ui.viewmodel.MyPageViewModel
+import com.umc.history.ui.viewmodel.MyPageViewModelFactory
+import com.umc.history.ui.viewmodel.StoryViewModelFactory
 
 
 class MyPageFragment : Fragment(), AuthInterface {
     val information = arrayListOf("내 이야기","좋아하는 이야기")
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
+    private val myPageViewModel : MyPageViewModel by viewModels {
+        MyPageViewModelFactory((requireContext().applicationContext as HiStoryApplication).storyRepository)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,13 +39,10 @@ class MyPageFragment : Fragment(), AuthInterface {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
-
         checkLogin()
-        buildDialog()
-        binding.myPageLoginIb.setOnClickListener{
+        binding.myPageLoginIb.setOnClickListener {
             login()
         }
-
 
 
         val builder = AlertDialog.Builder(activity)
@@ -49,10 +55,10 @@ class MyPageFragment : Fragment(), AuthInterface {
 
         builder.setView(dialogView)
 
-        fun showDialog(){
+        fun showDialog() {
             alertDialog.show()
 
-            alertDialog.findViewById<TextView>(R.id.bottomdialog_mypage_logout).setOnClickListener{
+            alertDialog.findViewById<TextView>(R.id.bottomdialog_mypage_logout).setOnClickListener {
                 logout()
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
@@ -62,15 +68,11 @@ class MyPageFragment : Fragment(), AuthInterface {
         }
 
         binding.myPageSettingIb.setOnClickListener {
-           showDialog()
+            showDialog()
         }
 
         return binding.root
     }
-    private fun buildDialog(){
-
-    }
-
     override fun login(){
         val intent = Intent(activity, LoginActivity::class.java)
         startActivity(intent)
@@ -90,6 +92,7 @@ class MyPageFragment : Fragment(), AuthInterface {
     }
 
     override fun checkLogin(){
+
         if(AuthApiClient.instance.hasToken()){
             UserApiClient.instance.me { user, error ->
                 if(error != null){
@@ -98,12 +101,13 @@ class MyPageFragment : Fragment(), AuthInterface {
                     binding.myPageLoginTv.visibility = View.GONE
                     binding.myPageLoginIb.visibility = View.GONE
                     binding.myPageNickNameTv.visibility = View.VISIBLE
-                    binding.myPageNickNameTv.text = user.kakaoAccount?.profile?.nickname
+                    binding.myPageNickNameTv.text = user.kakaoAccount?.profile?.nickname.toString()
 
                     val myPageAdapter = MyPageViewPagerAdapter(this)
                     binding.myPageMenuVp.visibility = View.VISIBLE
                     binding.myPageMenuTb.visibility = View.VISIBLE
                     binding.myPageMenuVp.adapter = myPageAdapter
+
                     TabLayoutMediator(binding.myPageMenuTb, binding.myPageMenuVp) { tab, position ->
                         tab.text = information[position]
                     }.attach()

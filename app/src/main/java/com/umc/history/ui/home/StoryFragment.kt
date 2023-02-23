@@ -86,32 +86,34 @@ class StoryFragment(private val type : Int): Fragment() {
                 }
             }
 
-            2-> {
-                storyViewModel.orientalStory.observe(viewLifecycleOwner, Observer { story->
-                    story.let { adapter.submitList(it) }
-                })
+            2-> viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    storyViewModel.orientalStory.collect { adapter.submitList(it) }
+                }
             }
 
-            else -> {
-                storyViewModel.westernStory.observe(viewLifecycleOwner, Observer { story->
-                    story.let { adapter.submitList(it) }
-                })
+
+            else -> viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    storyViewModel.westernStory.collect { adapter.submitList(it) }
+                }
             }
+
         }
     }
+
     fun insertDummy(){
         val vit = Bitmap.createBitmap(1,2, Bitmap.Config.ARGB_8888)
-        storyViewModel.insertStory(Story(1,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(3,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(4,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(5,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(6,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(7,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(8,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(9,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(10,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(11,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(12,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(1,3,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(3,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(4,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(5,6,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(6,7,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(7,8,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(8,9,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(9,3,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(10,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        storyViewModel.insertStory(Story(11,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
     }
 
     override fun onDestroyView() {
