@@ -1,5 +1,6 @@
 package com.umc.history.data
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.*
 
@@ -14,7 +15,12 @@ class StoryRepository(private val storyDao: StoryDao) {
         }
     }
     fun getStoryWriteByUser(userId: Long) : Flow<List<Story>> {
-        return storyDao.getStoryWriteByUser(userId)
+        Log.d("userIdww", "${userId.toString()}")
+        return allStory.map { storyList ->
+            storyList.filter {
+                it.userId == userId
+            }
+        }
     }
     fun getLikedStoryByUser(){}
 

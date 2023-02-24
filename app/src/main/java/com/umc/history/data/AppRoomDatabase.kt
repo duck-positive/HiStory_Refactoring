@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Story::class, Quiz::class] , version = 2, exportSchema = true)
+@Database(entities = [Story::class, Quiz::class] , version = 3, exportSchema = true)
 @TypeConverters(StoryConverter::class)
 public abstract class AppRoomDatabase : RoomDatabase(){
     abstract fun storyDao() : StoryDao

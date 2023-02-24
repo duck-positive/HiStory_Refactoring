@@ -18,6 +18,6 @@ interface StoryDao {
     fun getStoryWriteByUser(userId : Long) : Flow<List<Story>>
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStory(story: Story)
 }

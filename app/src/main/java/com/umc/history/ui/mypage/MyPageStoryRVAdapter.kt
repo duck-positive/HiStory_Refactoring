@@ -3,12 +3,15 @@ package com.umc.history.ui.mypage
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.umc.history.data.Story
 import com.umc.history.databinding.ItemPreviewStoryBinding
+import com.umc.history.ui.home.StoryListAdapter
 
 import retrofit2.http.Body
 
-class MyPageStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : RecyclerView.Adapter<MyPageStoryRVAdapter.ViewHolder>(){
+class MyPageStoryRVAdapter() : ListAdapter<Story, MyPageStoryRVAdapter.ViewHolder>(StoryListAdapter.StoryComparator()){
 
     lateinit var context:Context
     private lateinit var mItemClickListener: StoryItemClickListener
@@ -30,21 +33,20 @@ class MyPageStoryRVAdapter (private val myPageStoryList:ArrayList<Body>) : Recyc
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(myPageStoryList[position])
-        holder.binding.storyLo.setOnClickListener {
-            mItemClickListener.onItemClick(myPageStoryList[position])
-        }
+        val current = getItem(position)
+        holder.bind(current)
+
     }
 
-    override fun getItemCount(): Int = myPageStoryList.size
+
 
 //    @SuppressLint("NotifyDataSetChanged")
 //    fun addStories()
     //뷰홀더
 
     inner class ViewHolder(val binding: ItemPreviewStoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(myPageStory: Body){
-
+        fun bind(story: Story){
+            binding.itemMyPageStoryTitleTv.text = story.title
 //            Glide.with(context)
 //                .load(myPageStory.user.profileImgUrl)
 //                .into(binding.itemMyPageStoryProfileImgIv)
