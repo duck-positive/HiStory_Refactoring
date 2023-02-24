@@ -10,7 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
@@ -22,13 +26,15 @@ import com.umc.history.ui.LoginActivity
 import com.umc.history.ui.viewmodel.MyPageViewModel
 import com.umc.history.ui.viewmodel.MyPageViewModelFactory
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 class MyPageFragment : Fragment(), AuthInterface {
     val information = arrayListOf("내 이야기","좋아하는 이야기")
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
-    private val myPageViewModel : MyPageViewModel by viewModels {
+    private val myPageViewModel : MyPageViewModel by activityViewModels {
         MyPageViewModelFactory((requireContext().applicationContext as HiStoryApplication).storyRepository)
     }
 
@@ -92,16 +98,20 @@ class MyPageFragment : Fragment(), AuthInterface {
     }
 
     override fun checkLogin(){
+        Log.d("userId", "${myPageViewModel.userId}")
+        myPageViewModel.setUserId()
 
         if(AuthApiClient.instance.hasToken()){
             UserApiClient.instance.me { user, error ->
                 if(error != null){
 
                 } else if (user != null) {
+
                     binding.myPageLoginTv.visibility = View.GONE
                     binding.myPageLoginIb.visibility = View.GONE
                     binding.myPageNickNameTv.visibility = View.VISIBLE
                     binding.myPageNickNameTv.text = user.kakaoAccount?.profile?.nickname.toString()
+
 
                     val myPageAdapter = MyPageViewPagerAdapter(this)
                     binding.myPageMenuVp.visibility = View.VISIBLE

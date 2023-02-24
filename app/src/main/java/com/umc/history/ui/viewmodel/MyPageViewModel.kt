@@ -1,17 +1,43 @@
 package com.umc.history.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.user.model.User
 import com.umc.history.data.Story
 import com.umc.history.data.StoryRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 class MyPageViewModel(val repository: StoryRepository) : ViewModel() {
-    private val _storyWriteByUser : Flow<List<Story>> = repository.getStoryWriteByUser(2)
+    private var _userId : Long  = 0
+    val userId get() = _userId
+
+    private lateinit var _storyWriteByUser : Flow<List<Story>>
     val storyWriteByUser get() = _storyWriteByUser
+
+    fun getStory(userId : Long){
+        _storyWriteByUser = repository.getStoryWriteByUser(userId)
+    }
+     fun setUserId() {
+         UserApiClient.instance.me{ user, error ->
+             if(error != null){
+
+             } else if (user != null){
+
+                 getStory(user!!.id!!)
+             }
+
+         }
+    }
+
+
 }
 
 class MyPageViewModelFactory(private val repository: StoryRepository) : ViewModelProvider.Factory {

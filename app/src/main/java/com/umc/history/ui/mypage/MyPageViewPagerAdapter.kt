@@ -7,8 +7,8 @@ class MyPageViewPagerAdapter(fragment: MyPageFragment): FragmentStateAdapter(fra
     override fun getItemCount(): Int = 2
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0-> MyPageMyStoryFragment()
-            else-> MyPageMyStoryFragment()
+            0-> MyPageMyStoryFragment(0)
+            else-> MyPageMyStoryFragment(1)
         }
     }
 }
