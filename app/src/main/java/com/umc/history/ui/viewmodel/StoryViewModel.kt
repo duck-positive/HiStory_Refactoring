@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.umc.history.data.Story
 import com.umc.history.data.StoryRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,7 @@ class StoryViewModel(private val repository: StoryRepository) : ViewModel() {
 
     private val _westernStory = repository.getStoryByCategory("WESTERN")
     val westernStory get() = _westernStory
-    fun insertStory(story: Story) = viewModelScope.launch {
+    suspend fun insertStory(story: Story) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertStory(story)
     }
 

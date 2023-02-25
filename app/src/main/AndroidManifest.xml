@@ -22,8 +22,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustPan" />
-        
-        <activity android:name=".SettingLogoutActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"

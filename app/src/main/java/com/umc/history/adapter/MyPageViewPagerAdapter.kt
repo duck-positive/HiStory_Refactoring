@@ -1,7 +1,9 @@
-package com.umc.history.ui.mypage
+package com.umc.history.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.umc.history.ui.mypage.MyPageFragment
+import com.umc.history.ui.mypage.MyPageMyStoryFragment
 
 class MyPageViewPagerAdapter(fragment: MyPageFragment): FragmentStateAdapter(fragment){
     override fun getItemCount(): Int = 2

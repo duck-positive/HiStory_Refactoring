@@ -13,4 +13,5 @@ interface Util {
             hideSoftInputFromWindow(editText.windowToken, 0)
         }
     }
+
 }

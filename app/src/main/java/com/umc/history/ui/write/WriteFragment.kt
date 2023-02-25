@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,14 +21,19 @@ import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.umc.history.*
+import com.umc.history.adapter.HashtagRVAdapter
+import com.umc.history.adapter.ImageRVAdapter
+import com.umc.history.data.Story
 import com.umc.history.databinding.FragmentWriteBinding
 import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
 import com.umc.history.util.Util
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,7 +48,7 @@ class WriteFragment : Fragment(), Util {
     private var _binding : FragmentWriteBinding? = null
     val binding get() = _binding!!
     private var hashtagList = arrayListOf<String>()
-    private var imageList = arrayListOf<Image>()
+    private var imageList = arrayListOf<Bitmap>()
     private val REQUEST_GET_IMAGE = 105
     private var uriList = arrayListOf<Uri>()
     private var pathList = arrayListOf<MultipartBody.Part>()
@@ -58,8 +64,8 @@ class WriteFragment : Fragment(), Util {
         binding.writeHashtagRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.writeHashtagRv.adapter = HashtagRVAdapter(hashtagList)
         var category = ""
-        Log.d("checked", "${binding.writeCategoryRb.checkedRadioButtonId}")
-        Log.d("checked", "${binding.writeCategoryRb.isSelected}")
+        Log.d("checked_radio", "${binding.writeCategoryRb.checkedRadioButtonId}")
+        Log.d("checked_category", "${binding.writeCategoryRb.isSelected}")
         binding.writeCategoryRb.setOnCheckedChangeListener { _, id ->
             when (id){
                 R.id.write_category_korean_rb -> category = "KOREAN"
@@ -141,6 +147,8 @@ class WriteFragment : Fragment(), Util {
         } else if(binding.writeCategoryRb.checkedRadioButtonId == -1){
             showWarning(binding.writeCategoryWarningIv, binding.writeCategoryWarningTv)
         } else {
+
+            //storyViewModel.insertStory(Story(1,2607662030,"KOREAN","da", "da", listOf(Bitmap.createBitmap(1,2, Bitmap.Config.ARGB_8888)), listOf("da")))
             if (uriList.isNotEmpty()) {
                 for (path in uriList) {
                     val file = File(absolutePath(path))
@@ -176,7 +184,7 @@ class WriteFragment : Fragment(), Util {
             val uri = data?.data
             if(requestCode == REQUEST_GET_IMAGE){
                 val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-                imageList.add(Image(bitmap))
+                imageList.add(bitmap)
                 uriList.add(uri!!)
                 binding.writeImgRv.adapter?.notifyItemInserted(imageList.lastIndex)
             }

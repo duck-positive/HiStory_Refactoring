@@ -10,34 +10,25 @@ import com.umc.history.data.Story
 import com.umc.history.data.StoryRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class MyPageViewModel(val repository: StoryRepository) : ViewModel() {
-    private var _userId : Long  = 0
+class MyPageViewModel(private val repository: StoryRepository) : ViewModel() {
+    private var _userId : Long = 0
     val userId get() = _userId
 
     private lateinit var _storyWriteByUser : Flow<List<Story>>
     val storyWriteByUser get() = _storyWriteByUser
-
     fun getStory(userId : Long){
         _storyWriteByUser = repository.getStoryWriteByUser(userId)
     }
-     fun setUserId() {
-         UserApiClient.instance.me{ user, error ->
-             if(error != null){
-
-             } else if (user != null){
-
-                 getStory(user!!.id!!)
-             }
-
-         }
+     fun getStoryWriteByUser(userId : Long) {
+         _userId = userId
+         getStory(userId)
     }
-
-
 }
 
 class MyPageViewModelFactory(private val repository: StoryRepository) : ViewModelProvider.Factory {

@@ -21,17 +21,15 @@ import com.umc.history.ui.MainActivity
 import com.umc.history.ui.home.HomeFragment
 
 
-class StoryDetailFragment(story : Story) : Fragment() {
-    lateinit var binding : FragmentStoryDetailBinding
-    private var hashtagList = arrayListOf<String>()
-    private var commentList = arrayListOf<Comment>()
-    var story = story
+class StoryDetailFragment(private val story : Story) : Fragment() {
+    private var _binding : FragmentStoryDetailBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStoryDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentStoryDetailBinding.inflate(inflater, container, false)
         getHashTag()
         getComment()
         checkLike()
@@ -42,6 +40,7 @@ class StoryDetailFragment(story : Story) : Fragment() {
                 hideKeyboard(binding.storyCommentEt)
             }
         }
+
         binding.storyCommentEt.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
                 if (p1 == EditorInfo.IME_ACTION_DONE){
@@ -62,21 +61,12 @@ class StoryDetailFragment(story : Story) : Fragment() {
         val window = alertDialog.window
         window?.setGravity(Gravity.BOTTOM)
         builder.setView(dialogView)
-
-
+        with(binding){
+            storyTitleTv.text = story.title
+            storyContentTv.text = story.content
+            storyImageIv.setImageBitmap(story.img!!.get(0))
+        }
         binding.storyTitleTv.text = story.title
-
-//        if(story.images.isNullOrEmpty()) {
-//            binding.storyImageSv.visibility = View.GONE
-//            binding.storyImageIv.visibility = View.GONE
-//        } else {
-//            getImage(story.images!!.size)
-//        }
-
-//        binding.storyContentTv.text = story.contents
-//        binding.storyLikeTv.text = story.totalLike.toString()
-//        binding.storyCommentTv.text = story.totalComment.toString()
-
 
         binding.storyLikeIv.setOnClickListener {
             postLike()

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.umc.history.OneStory
 import com.umc.history.R
 import com.umc.history.databinding.FragmentSearchBinding
 import com.umc.history.util.Util

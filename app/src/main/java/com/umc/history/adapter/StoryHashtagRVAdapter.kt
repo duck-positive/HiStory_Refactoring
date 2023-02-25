@@ -1,9 +1,10 @@
-package com.umc.history
+package com.umc.history.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.umc.history.R
 import com.umc.history.databinding.ItemHashtagBinding
 
 

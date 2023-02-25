@@ -20,8 +20,10 @@ import com.umc.history.databinding.FragmentStoryBinding
 import com.umc.history.ui.detail.StoryDetailFragment
 import com.umc.history.ui.viewmodel.StoryViewModel
 import com.umc.history.ui.viewmodel.StoryViewModelFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StoryFragment(private val type : Int): Fragment() {
 
@@ -104,17 +106,20 @@ class StoryFragment(private val type : Int): Fragment() {
 
     fun insertDummy(){
         val vit = Bitmap.createBitmap(1,2, Bitmap.Config.ARGB_8888)
-        storyViewModel.insertStory(Story(1,2607662030,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(1,2607662030,"ALL","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(3,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(4,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(5,6,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(6,7,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(7,8,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(8,9,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(9,3,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(10,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
-        storyViewModel.insertStory(Story(11,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
+        viewLifecycleOwner.lifecycleScope.launch {
+            storyViewModel.insertStory(Story(1,2607662030,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(1,2607662030,"ALL","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(3,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(4,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(5,6,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(6,7,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(7,8,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(8,9,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(9,3,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(10,4,"KOREAN","da", "da", listOf(vit), listOf("da")))
+                storyViewModel.insertStory(Story(11,5,"KOREAN","da", "da", listOf(vit), listOf("da")))
+
+        }
     }
 
     override fun onDestroyView() {

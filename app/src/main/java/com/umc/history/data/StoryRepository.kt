@@ -15,7 +15,6 @@ class StoryRepository(private val storyDao: StoryDao) {
         }
     }
     fun getStoryWriteByUser(userId: Long) : Flow<List<Story>> {
-        Log.d("userIdww", "${userId.toString()}")
         return allStory.map { storyList ->
             storyList.filter {
                 it.userId == userId

@@ -11,23 +11,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.umc.history.HiStoryApplication
 import com.umc.history.R
+import com.umc.history.adapter.MyPageViewPagerAdapter
 import com.umc.history.auth.AuthInterface
 import com.umc.history.databinding.FragmentMypageBinding
 import com.umc.history.ui.LoginActivity
 import com.umc.history.ui.viewmodel.MyPageViewModel
 import com.umc.history.ui.viewmodel.MyPageViewModelFactory
-import com.umc.history.ui.viewmodel.StoryViewModelFactory
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 
 class MyPageFragment : Fragment(), AuthInterface {
@@ -45,32 +39,29 @@ class MyPageFragment : Fragment(), AuthInterface {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
+
         checkLogin()
+
         binding.myPageLoginIb.setOnClickListener {
             login()
         }
 
 
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.bottomdialog_mypage, null)
         builder.setView(dialogView)
-
         val alertDialog = builder.create()
         val window = alertDialog.window
         window?.setGravity(Gravity.BOTTOM)
-
         builder.setView(dialogView)
 
         fun showDialog() {
             alertDialog.show()
-
             alertDialog.findViewById<TextView>(R.id.bottomdialog_mypage_logout).setOnClickListener {
                 logout()
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
             }
-
-
         }
 
         binding.myPageSettingIb.setOnClickListener {
@@ -98,26 +89,22 @@ class MyPageFragment : Fragment(), AuthInterface {
     }
 
     override fun checkLogin(){
-        Log.d("userId", "${myPageViewModel.userId}")
-        myPageViewModel.setUserId()
-
         if(AuthApiClient.instance.hasToken()){
             UserApiClient.instance.me { user, error ->
                 if(error != null){
 
                 } else if (user != null) {
+                    myPageViewModel.getStoryWriteByUser(user.id!!)
 
                     binding.myPageLoginTv.visibility = View.GONE
                     binding.myPageLoginIb.visibility = View.GONE
                     binding.myPageNickNameTv.visibility = View.VISIBLE
                     binding.myPageNickNameTv.text = user.kakaoAccount?.profile?.nickname.toString()
 
-
                     val myPageAdapter = MyPageViewPagerAdapter(this)
                     binding.myPageMenuVp.visibility = View.VISIBLE
                     binding.myPageMenuTb.visibility = View.VISIBLE
                     binding.myPageMenuVp.adapter = myPageAdapter
-
                     TabLayoutMediator(binding.myPageMenuTb, binding.myPageMenuVp) { tab, position ->
                         tab.text = information[position]
                     }.attach()

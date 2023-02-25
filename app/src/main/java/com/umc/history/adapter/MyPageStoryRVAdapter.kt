@@ -1,4 +1,4 @@
-package com.umc.history.ui.mypage
+package com.umc.history.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,17 +14,13 @@ import retrofit2.http.Body
 class MyPageStoryRVAdapter() : ListAdapter<Story, MyPageStoryRVAdapter.ViewHolder>(StoryListAdapter.StoryComparator()){
 
     lateinit var context:Context
-    private lateinit var mItemClickListener: StoryItemClickListener
-    interface StoryItemClickListener{
-        fun onItemClick(story : Body)
-    }
+
+
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         context = recyclerView.context
     }
-    fun storyItemClickListener(storyItemClickListener: StoryItemClickListener){
-        mItemClickListener = storyItemClickListener
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemPreviewStoryBinding = ItemPreviewStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -35,18 +31,20 @@ class MyPageStoryRVAdapter() : ListAdapter<Story, MyPageStoryRVAdapter.ViewHolde
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(current)
-
     }
-
-
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun addStories()
     //뷰홀더
 
     inner class ViewHolder(val binding: ItemPreviewStoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(story: Story){
-            binding.itemMyPageStoryTitleTv.text = story.title
+            with(binding){
+                storyLo.setOnClickListener {
+
+                }
+                itemMyPageStoryTitleTv.text = story.title
+                itemMyPageStoryDetailTv.text = story.content
+                itemMyPageStoryCommentTv.text = story.commentNumber.toString()
+                itemMyPageStoryLikeTv.text = story.likeNumber.toString()
+            }
 //            Glide.with(context)
 //                .load(myPageStory.user.profileImgUrl)
 //                .into(binding.itemMyPageStoryProfileImgIv)

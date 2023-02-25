@@ -1,4 +1,4 @@
-package com.umc.history
+package com.umc.history.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
